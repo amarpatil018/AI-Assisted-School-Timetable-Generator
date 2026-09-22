@@ -2,23 +2,40 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-# Temporary storage for school settings
+# Temporary school settings
 school_settings = {
     "school_name": "My School",
     "start_time": "08:30",
     "end_time": "15:30",
     "period_duration": 45,
     "number_of_periods": 8,
-    "working_days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "working_days": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+    ],
     "break_start": "12:30",
     "break_duration": 45
 }
 
 
+# -----------------------------------------
+# HOME / DASHBOARD
+# -----------------------------------------
+
 @app.route("/")
 def home():
-    return render_template("index.html", settings=school_settings)
+    return render_template(
+        "index.html",
+        settings=school_settings
+    )
 
+
+# -----------------------------------------
+# SCHOOL SETTINGS
+# -----------------------------------------
 
 @app.route("/settings", methods=["GET", "POST"])
 def settings():
@@ -26,7 +43,9 @@ def settings():
     if request.method == "POST":
 
         school_settings["school_name"] = request.form["school_name"]
+
         school_settings["start_time"] = request.form["start_time"]
+
         school_settings["end_time"] = request.form["end_time"]
 
         school_settings["period_duration"] = int(
@@ -54,6 +73,10 @@ def settings():
         settings=school_settings
     )
 
+
+# -----------------------------------------
+# RUN APPLICATION
+# -----------------------------------------
 
 if __name__ == "__main__":
     app.run(debug=True)
