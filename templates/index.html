@@ -23,17 +23,17 @@
 <body>
 
 
-<!-- =========================================
-     HEADER
-========================================= -->
-
 <header class="header">
 
     <div class="logo">
 
-        <span class="logo-icon">📚</span>
+        <span class="logo-icon">
+            📚
+        </span>
 
-        <span>SmartSchool</span>
+        <span>
+            SmartSchool
+        </span>
 
     </div>
 
@@ -51,7 +51,7 @@
             Classes
         </a>
 
-        <a href="#">
+        <a href="{{ url_for('teachers') }}">
             Teachers
         </a>
 
@@ -69,15 +69,11 @@
 
 
 
-<!-- =========================================
-     MAIN CONTENT
-========================================= -->
-
 <main class="container">
 
 
     <!-- =========================================
-         WELCOME SECTION
+         WELCOME
     ========================================= -->
 
     <section class="welcome">
@@ -116,9 +112,7 @@
     <section class="dashboard-grid">
 
 
-        <!-- =====================================
-             CLASSES
-        ====================================== -->
+        <!-- CLASSES -->
 
         <div class="dashboard-card">
 
@@ -135,8 +129,6 @@
                 8A, 8B, 9A and 9B.
             </p>
 
-            <!-- WORKING CLASSES LINK -->
-
             <a
                 href="{{ url_for('classes') }}"
                 class="card-button"
@@ -148,9 +140,7 @@
 
 
 
-        <!-- =====================================
-             TEACHERS
-        ====================================== -->
+        <!-- TEACHERS -->
 
         <div class="dashboard-card">
 
@@ -163,12 +153,12 @@
             </h2>
 
             <p>
-                Add teachers and assign the subjects
-                and classes they teach.
+                Add teachers and record the subjects
+                they teach.
             </p>
 
             <a
-                href="#"
+                href="{{ url_for('teachers') }}"
                 class="card-button"
             >
                 Manage Teachers
@@ -178,9 +168,7 @@
 
 
 
-        <!-- =====================================
-             SUBJECTS
-        ====================================== -->
+        <!-- SUBJECTS -->
 
         <div class="dashboard-card">
 
@@ -208,9 +196,7 @@
 
 
 
-        <!-- =====================================
-             SCHOOL SETTINGS
-        ====================================== -->
+        <!-- SETTINGS -->
 
         <div class="dashboard-card">
 
@@ -321,21 +307,24 @@
 
             <div class="progress-bar">
 
-                <div class="progress-fill"></div>
+                <div
+                    class="progress-fill"
+                    style="width: 50%;"
+                ></div>
 
             </div>
 
 
             <span>
-                Step 3 of 6
+                Step 4 of 8
             </span>
 
         </div>
 
 
         <p>
-            School settings and classes are now available.
-            Next we will add teachers and their subjects.
+            School settings, classes and teachers
+            are now available.
         </p>
 
     </section>
@@ -344,10 +333,6 @@
 </main>
 
 
-
-<!-- =========================================
-     FOOTER
-========================================= -->
 
 <footer class="footer">
 

@@ -7,7 +7,7 @@ DATABASE = "school.db"
 
 
 # =========================================
-# DATABASE
+# DATABASE CONNECTION
 # =========================================
 
 def get_db_connection():
@@ -16,10 +16,15 @@ def get_db_connection():
     return connection
 
 
+# =========================================
+# CREATE DATABASE TABLES
+# =========================================
+
 def create_database():
 
     connection = get_db_connection()
 
+    # Classes table
     connection.execute("""
         CREATE TABLE IF NOT EXISTS classes (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -28,12 +33,21 @@ def create_database():
         )
     """)
 
+    # Teachers table
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS teachers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            teacher_name TEXT NOT NULL,
+            subjects TEXT NOT NULL
+        )
+    """)
+
     connection.commit()
     connection.close()
 
 
 # =========================================
-# TEMPORARY SCHOOL SETTINGS
+# SCHOOL SETTINGS
 # =========================================
 
 school_settings = {
@@ -67,12 +81,17 @@ def home():
         "SELECT * FROM classes ORDER BY class_name, section"
     ).fetchall()
 
+    teachers = connection.execute(
+        "SELECT * FROM teachers ORDER BY teacher_name"
+    ).fetchall()
+
     connection.close()
 
     return render_template(
         "index.html",
         settings=school_settings,
-        classes=classes
+        classes=classes,
+        teachers=teachers
     )
 
 
@@ -126,11 +145,10 @@ def classes():
 
     connection = get_db_connection()
 
-    # Add a new class
     if request.method == "POST":
 
-        class_name = request.form["class_name"]
-        section = request.form["section"]
+        class_name = request.form["class_name"].strip()
+        section = request.form["section"].strip().upper()
 
         connection.execute(
             """
@@ -141,12 +159,10 @@ def classes():
         )
 
         connection.commit()
-
         connection.close()
 
         return redirect(url_for("classes"))
 
-    # Get all classes
     class_list = connection.execute(
         """
         SELECT * FROM classes
@@ -180,6 +196,69 @@ def delete_class(class_id):
     connection.close()
 
     return redirect(url_for("classes"))
+
+
+# =========================================
+# TEACHERS
+# =========================================
+
+@app.route("/teachers", methods=["GET", "POST"])
+def teachers():
+
+    connection = get_db_connection()
+
+    if request.method == "POST":
+
+        teacher_name = request.form["teacher_name"].strip()
+
+        subjects = request.form["subjects"].strip()
+
+        connection.execute(
+            """
+            INSERT INTO teachers (teacher_name, subjects)
+            VALUES (?, ?)
+            """,
+            (teacher_name, subjects)
+        )
+
+        connection.commit()
+        connection.close()
+
+        return redirect(url_for("teachers"))
+
+    teacher_list = connection.execute(
+        """
+        SELECT * FROM teachers
+        ORDER BY teacher_name
+        """
+    ).fetchall()
+
+    connection.close()
+
+    return render_template(
+        "teachers.html",
+        teachers=teacher_list
+    )
+
+
+# =========================================
+# DELETE TEACHER
+# =========================================
+
+@app.route("/teachers/delete/<int:teacher_id>")
+def delete_teacher(teacher_id):
+
+    connection = get_db_connection()
+
+    connection.execute(
+        "DELETE FROM teachers WHERE id = ?",
+        (teacher_id,)
+    )
+
+    connection.commit()
+    connection.close()
+
+    return redirect(url_for("teachers"))
 
 
 # =========================================
