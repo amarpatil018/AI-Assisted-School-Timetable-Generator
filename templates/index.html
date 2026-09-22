@@ -23,6 +23,10 @@
 <body>
 
 
+<!-- =========================================
+     HEADER
+========================================= -->
+
 <header class="header">
 
     <div class="logo">
@@ -55,7 +59,7 @@
             Teachers
         </a>
 
-        <a href="#">
+        <a href="{{ url_for('subjects') }}">
             Subjects
         </a>
 
@@ -69,11 +73,15 @@
 
 
 
+<!-- =========================================
+     MAIN CONTENT
+========================================= -->
+
 <main class="container">
 
 
     <!-- =========================================
-         WELCOME
+         WELCOME SECTION
     ========================================= -->
 
     <section class="welcome">
@@ -90,8 +98,8 @@
             </h1>
 
             <p class="description">
-                Manage classes, teachers, subjects and school
-                timings from one simple platform.
+                Manage classes, teachers, subjects and
+                school timings from one simple platform.
             </p>
 
         </div>
@@ -112,7 +120,9 @@
     <section class="dashboard-grid">
 
 
-        <!-- CLASSES -->
+        <!-- =====================================
+             CLASSES CARD
+        ====================================== -->
 
         <div class="dashboard-card">
 
@@ -140,7 +150,9 @@
 
 
 
-        <!-- TEACHERS -->
+        <!-- =====================================
+             TEACHERS CARD
+        ====================================== -->
 
         <div class="dashboard-card">
 
@@ -154,7 +166,7 @@
 
             <p>
                 Add teachers and record the subjects
-                they teach.
+                they are able to teach.
             </p>
 
             <a
@@ -168,7 +180,9 @@
 
 
 
-        <!-- SUBJECTS -->
+        <!-- =====================================
+             SUBJECTS CARD
+        ====================================== -->
 
         <div class="dashboard-card">
 
@@ -182,11 +196,11 @@
 
             <p>
                 Add subjects and define how many
-                periods each subject needs.
+                periods each subject needs per week.
             </p>
 
             <a
-                href="#"
+                href="{{ url_for('subjects') }}"
                 class="card-button"
             >
                 Manage Subjects
@@ -196,7 +210,9 @@
 
 
 
-        <!-- SETTINGS -->
+        <!-- =====================================
+             SETTINGS CARD
+        ====================================== -->
 
         <div class="dashboard-card">
 
@@ -219,6 +235,110 @@
             >
                 School Settings
             </a>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================================
+         CURRENT DATA SUMMARY
+    ========================================= -->
+
+    <section class="summary-section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <p class="small-heading">
+                    CURRENT DATA
+                </p>
+
+                <h2>
+                    School Information
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-grid">
+
+
+            <!-- Classes Summary -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    🏫
+                </div>
+
+                <div>
+
+                    <h3>
+                        {{ classes|length }}
+                    </h3>
+
+                    <p>
+                        Classes Added
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Teachers Summary -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    👨‍🏫
+                </div>
+
+                <div>
+
+                    <h3>
+                        {{ teachers|length }}
+                    </h3>
+
+                    <p>
+                        Teachers Added
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Subjects Summary -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    📖
+                </div>
+
+                <div>
+
+                    <h3>
+                        {{ subjects|length }}
+                    </h3>
+
+                    <p>
+                        Subjects Added
+                    </p>
+
+                </div>
+
+            </div>
+
 
         </div>
 
@@ -276,6 +396,12 @@
                     class and period conflicts.
                 </p>
 
+                <p class="generator-note">
+                    First, add your classes, teachers and
+                    subjects. The next step will connect
+                    them together.
+                </p>
+
             </div>
 
 
@@ -309,22 +435,22 @@
 
                 <div
                     class="progress-fill"
-                    style="width: 50%;"
+                    style="width: 62.5%;"
                 ></div>
 
             </div>
 
 
             <span>
-                Step 4 of 8
+                Step 5 of 8
             </span>
 
         </div>
 
 
         <p>
-            School settings, classes and teachers
-            are now available.
+            School settings, classes, teachers and
+            subjects are now available.
         </p>
 
     </section>
@@ -334,6 +460,10 @@
 
 
 
+<!-- =========================================
+     FOOTER
+========================================= -->
+
 <footer class="footer">
 
     <p>
@@ -341,6 +471,7 @@
     </p>
 
 </footer>
+
 
 
 </body>

@@ -997,3 +997,54 @@ body {
     }
 
 }
+/* =========================================
+   SUBJECTS PAGE
+========================================= */
+
+.subjects-container {
+    width: 88%;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+
+.subject-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+
+.subject-form .form-group {
+    flex: 1;
+}
+
+
+.subject-submit {
+    display: flex;
+    align-items: flex-end;
+}
+
+
+/* Subjects Mobile */
+
+@media (max-width: 700px) {
+
+    .subjects-container {
+        width: 92%;
+    }
+
+    .subject-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .subject-submit {
+        width: 100%;
+    }
+
+    .subject-submit .save-button {
+        width: 100%;
+    }
+
+}

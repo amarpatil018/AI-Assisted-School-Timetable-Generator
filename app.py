@@ -42,6 +42,15 @@ def create_database():
         )
     """)
 
+    # Subjects table
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS subjects (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            subject_name TEXT NOT NULL,
+            periods_per_week INTEGER NOT NULL
+        )
+    """)
+
     connection.commit()
     connection.close()
 
@@ -78,11 +87,24 @@ def home():
     connection = get_db_connection()
 
     classes = connection.execute(
-        "SELECT * FROM classes ORDER BY class_name, section"
+        """
+        SELECT * FROM classes
+        ORDER BY class_name, section
+        """
     ).fetchall()
 
     teachers = connection.execute(
-        "SELECT * FROM teachers ORDER BY teacher_name"
+        """
+        SELECT * FROM teachers
+        ORDER BY teacher_name
+        """
+    ).fetchall()
+
+    subjects = connection.execute(
+        """
+        SELECT * FROM subjects
+        ORDER BY subject_name
+        """
     ).fetchall()
 
     connection.close()
@@ -91,7 +113,8 @@ def home():
         "index.html",
         settings=school_settings,
         classes=classes,
-        teachers=teachers
+        teachers=teachers,
+        subjects=subjects
     )
 
 
@@ -148,6 +171,7 @@ def classes():
     if request.method == "POST":
 
         class_name = request.form["class_name"].strip()
+
         section = request.form["section"].strip().upper()
 
         connection.execute(
@@ -159,6 +183,7 @@ def classes():
         )
 
         connection.commit()
+
         connection.close()
 
         return redirect(url_for("classes"))
@@ -193,6 +218,7 @@ def delete_class(class_id):
     )
 
     connection.commit()
+
     connection.close()
 
     return redirect(url_for("classes"))
@@ -222,6 +248,7 @@ def teachers():
         )
 
         connection.commit()
+
         connection.close()
 
         return redirect(url_for("teachers"))
@@ -256,9 +283,81 @@ def delete_teacher(teacher_id):
     )
 
     connection.commit()
+
     connection.close()
 
     return redirect(url_for("teachers"))
+
+
+# =========================================
+# SUBJECTS
+# =========================================
+
+@app.route("/subjects", methods=["GET", "POST"])
+def subjects():
+
+    connection = get_db_connection()
+
+    if request.method == "POST":
+
+        subject_name = request.form["subject_name"].strip()
+
+        periods_per_week = int(
+            request.form["periods_per_week"]
+        )
+
+        connection.execute(
+            """
+            INSERT INTO subjects
+            (subject_name, periods_per_week)
+            VALUES (?, ?)
+            """,
+            (
+                subject_name,
+                periods_per_week
+            )
+        )
+
+        connection.commit()
+
+        connection.close()
+
+        return redirect(url_for("subjects"))
+
+    subject_list = connection.execute(
+        """
+        SELECT * FROM subjects
+        ORDER BY subject_name
+        """
+    ).fetchall()
+
+    connection.close()
+
+    return render_template(
+        "subjects.html",
+        subjects=subject_list
+    )
+
+
+# =========================================
+# DELETE SUBJECT
+# =========================================
+
+@app.route("/subjects/delete/<int:subject_id>")
+def delete_subject(subject_id):
+
+    connection = get_db_connection()
+
+    connection.execute(
+        "DELETE FROM subjects WHERE id = ?",
+        (subject_id,)
+    )
+
+    connection.commit()
+
+    connection.close()
+
+    return redirect(url_for("subjects"))
 
 
 # =========================================
