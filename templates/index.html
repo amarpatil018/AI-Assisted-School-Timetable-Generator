@@ -5,7 +5,10 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Smart School Timetable</title>
 
@@ -37,11 +40,14 @@
 
     <nav class="navigation">
 
-        <a href="{{ url_for('home') }}" class="active">
+        <a
+            href="{{ url_for('home') }}"
+            class="active"
+        >
             Dashboard
         </a>
 
-        <a href="#">
+        <a href="{{ url_for('classes') }}">
             Classes
         </a>
 
@@ -70,7 +76,9 @@
 <main class="container">
 
 
-    <!-- Welcome -->
+    <!-- =========================================
+         WELCOME SECTION
+    ========================================= -->
 
     <section class="welcome">
 
@@ -108,7 +116,9 @@
     <section class="dashboard-grid">
 
 
-        <!-- Classes -->
+        <!-- =====================================
+             CLASSES
+        ====================================== -->
 
         <div class="dashboard-card">
 
@@ -125,7 +135,12 @@
                 8A, 8B, 9A and 9B.
             </p>
 
-            <a href="#" class="card-button">
+            <!-- WORKING CLASSES LINK -->
+
+            <a
+                href="{{ url_for('classes') }}"
+                class="card-button"
+            >
                 Manage Classes
             </a>
 
@@ -133,7 +148,9 @@
 
 
 
-        <!-- Teachers -->
+        <!-- =====================================
+             TEACHERS
+        ====================================== -->
 
         <div class="dashboard-card">
 
@@ -150,7 +167,10 @@
                 and classes they teach.
             </p>
 
-            <a href="#" class="card-button">
+            <a
+                href="#"
+                class="card-button"
+            >
                 Manage Teachers
             </a>
 
@@ -158,7 +178,9 @@
 
 
 
-        <!-- Subjects -->
+        <!-- =====================================
+             SUBJECTS
+        ====================================== -->
 
         <div class="dashboard-card">
 
@@ -175,7 +197,10 @@
                 periods each subject needs.
             </p>
 
-            <a href="#" class="card-button">
+            <a
+                href="#"
+                class="card-button"
+            >
                 Manage Subjects
             </a>
 
@@ -183,7 +208,9 @@
 
 
 
-        <!-- Settings -->
+        <!-- =====================================
+             SCHOOL SETTINGS
+        ====================================== -->
 
         <div class="dashboard-card">
 
@@ -300,15 +327,15 @@
 
 
             <span>
-                Step 2 of 6
+                Step 3 of 6
             </span>
 
         </div>
 
 
         <p>
-            School settings are now available.
-            Next we will add classes and sections.
+            School settings and classes are now available.
+            Next we will add teachers and their subjects.
         </p>
 
     </section>
