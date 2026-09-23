@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -10,328 +8,410 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Classes & Sections - SmartSchool</title>
+    <title>Classes & Sections - AI-Assisted School Timetable Generator</title>
 
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='style.css') }}"
     >
-
 </head>
-
 
 <body>
 
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
-<!-- =========================================
-     HEADER
-========================================= -->
+    <header class="main-header">
 
-<header class="header">
+        <div class="header-container">
 
-    <div class="logo">
+            <div class="logo-area">
 
-        <span class="logo-icon">
-            📚
-        </span>
+                <h1>
+                    AI-Assisted School Timetable Generator
+                </h1>
 
-        <span>
-            SmartSchool
-        </span>
-
-    </div>
-
-
-    <nav class="navigation">
-
-        <a href="{{ url_for('index') }}">
-            Dashboard
-        </a>
-
-        <a
-            href="{{ url_for('classes') }}"
-            class="active"
-        >
-            Classes
-        </a>
-
-        <a href="#">
-            Teachers
-        </a>
-
-        <a href="#">
-            Subjects
-        </a>
-
-        <a href="{{ url_for('settings') }}">
-            Settings
-        </a>
-
-    </nav>
-
-</header>
-
-
-
-<!-- =========================================
-     MAIN CONTENT
-========================================= -->
-
-<main class="classes-container">
-
-
-    <!-- Page Heading -->
-
-    <div class="page-heading">
-
-        <p class="small-heading">
-            SCHOOL MANAGEMENT
-        </p>
-
-        <h1>
-            Classes & Sections
-        </h1>
-
-        <p>
-            Add and manage the classes and sections
-            in your school.
-        </p>
-
-    </div>
-
-
-
-    <!-- =========================================
-         ADD CLASS
-    ========================================= -->
-
-    <section class="settings-card">
-
-        <h2>
-            ➕ Add Class & Section
-        </h2>
-
-        <p class="section-description">
-            Enter a class and its section.
-        </p>
-
-
-        <form
-            method="POST"
-            class="class-form"
-        >
-
-
-            <div class="form-group">
-
-                <label for="class_name">
-                    Class
-                </label>
-
-                <input
-                    type="text"
-                    id="class_name"
-                    name="class_name"
-                    placeholder="Example: 8"
-                    required
-                >
-
-            </div>
-
-
-
-            <div class="form-group">
-
-                <label for="section">
-                    Section
-                </label>
-
-                <input
-                    type="text"
-                    id="section"
-                    name="section"
-                    placeholder="Example: A"
-                    required
-                >
-
-            </div>
-
-
-
-            <div class="class-submit">
-
-                <button
-                    type="submit"
-                    class="save-button"
-                >
-                    Add Class
-                </button>
-
-            </div>
-
-
-        </form>
-
-    </section>
-
-
-
-    <!-- =========================================
-         CLASS LIST
-    ========================================= -->
-
-    <section class="settings-card">
-
-        <div class="class-list-heading">
-
-            <div>
-
-                <h2>
-                    📋 Current Classes
-                </h2>
-
-                <p class="section-description">
-                    Classes currently added to the school.
+                <p>
+                    Smart School Management System
                 </p>
 
             </div>
 
 
-            <span class="class-count">
-                {{ classes|length }} Classes
-            </span>
+            <nav class="main-nav">
+
+                <a href="{{ url_for('index') }}">
+                    Dashboard
+                </a>
+
+                <a
+                    href="{{ url_for('classes') }}"
+                    class="active"
+                >
+                    Classes
+                </a>
+
+                <a href="{{ url_for('teachers') }}">
+                    Teachers
+                </a>
+
+                <a href="{{ url_for('subjects') }}">
+                    Subjects
+                </a>
+
+                <a href="{{ url_for('assignments') }}">
+                    Assignments
+                </a>
+
+                <a href="{{ url_for('settings') }}">
+                    Settings
+                </a>
+
+            </nav>
 
         </div>
 
+    </header>
 
 
-        {% if classes %}
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="classes-container">
 
 
-        <div class="class-table-container">
+        <!-- PAGE HEADING -->
 
-            <table class="class-table">
+        <section class="page-heading">
 
-                <thead>
+            <div>
 
-                    <tr>
+                <span class="section-label">
+                    SCHOOL MANAGEMENT
+                </span>
 
-                        <th>
-                            #
-                        </th>
+                <h2>
+                    Classes & Sections
+                </h2>
 
-                        <th>
-                            Class
-                        </th>
+                <p>
+                    Add and manage classes and sections
+                    for your school timetable.
+                </p>
 
-                        <th>
-                            Section
-                        </th>
-
-                        <th>
-                            Full Name
-                        </th>
-
-                        <th>
-                            Action
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody>
-
-                    {% for class in classes %}
-
-                    <tr>
-
-                        <td>
-                            {{ loop.index }}
-                        </td>
-
-                        <td>
-                            Class {{ class["class_name"] }}
-                        </td>
-
-                        <td>
-                            {{ class["section"] }}
-                        </td>
-
-                        <td>
-                            {{ class["class_name"] }}{{ class["section"] }}
-                        </td>
-
-                        <td>
-
-                            <a
-                                href="{{ url_for(
-                                    'delete_class',
-                                    class_id=class['id']
-                                ) }}"
-                                class="delete-button"
-                                onclick="return confirm(
-                                    'Are you sure you want to delete this class?'
-                                );"
-                            >
-                                Delete
-                            </a>
-
-                        </td>
-
-                    </tr>
-
-                    {% endfor %}
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-
-        {% else %}
-
-
-        <div class="empty-state">
-
-            <div class="empty-icon">
-                🏫
             </div>
 
-            <h3>
-                No classes added yet
-            </h3>
-
-            <p>
-                Use the form above to add your first class.
-            </p>
-
-        </div>
+        </section>
 
 
-        {% endif %}
+        <!-- =================================================
+             ADD CLASS FORM
+        ================================================== -->
+
+        <section class="content-card">
+
+            <div class="card-heading">
+
+                <div>
+
+                    <span class="small-label">
+                        ADD NEW
+                    </span>
+
+                    <h3>
+                        Add Class
+                    </h3>
+
+                </div>
+
+            </div>
 
 
-    </section>
+            <form
+                method="POST"
+                action="{{ url_for('classes') }}"
+                class="class-form"
+            >
+
+                <div class="form-group">
+
+                    <label for="class_name">
+                        Class Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="class_name"
+                        name="class_name"
+                        placeholder="Example: 10th Standard"
+                        required
+                    >
+
+                </div>
 
 
-</main>
+                <div class="form-group">
+
+                    <label for="section">
+                        Section
+                    </label>
+
+                    <input
+                        type="text"
+                        id="section"
+                        name="section"
+                        placeholder="Example: A"
+                        required
+                    >
+
+                </div>
 
 
+                <div class="form-submit">
 
-<!-- Footer -->
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        + Add Class
+                    </button>
 
-<footer class="footer">
+                </div>
 
-    <p>
-        © 2026 SmartSchool Timetable Management System
-    </p>
+            </form>
 
-</footer>
+        </section>
 
+
+        <!-- =================================================
+             CLASS LIST
+        ================================================== -->
+
+        <section class="content-card">
+
+            <div class="card-heading">
+
+                <div>
+
+                    <span class="small-label">
+                        CURRENT DATA
+                    </span>
+
+                    <h3>
+                        Class List
+                    </h3>
+
+                </div>
+
+
+                <div class="data-count">
+
+                    {{ classes|length }}
+
+                    {% if classes|length == 1 %}
+                        Class
+                    {% else %}
+                        Classes
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            {% if classes %}
+
+            <div class="table-container">
+
+                <table class="data-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                #
+                            </th>
+
+                            <th>
+                                Class
+                            </th>
+
+                            <th>
+                                Section
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for class in classes %}
+
+                        <tr>
+
+                            <td>
+                                {{ loop.index }}
+                            </td>
+
+
+                            <td>
+
+                                <strong>
+                                    {{ class['class_name'] }}
+                                </strong>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="section-badge">
+                                    {{ class['section'] }}
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <!-- IMPORTANT:
+                                     class_id matches app.py -->
+
+                                <a
+                                    href="{{ url_for('delete_class', class_id=class['id']) }}"
+                                    class="delete-button"
+                                    onclick="return confirm('Are you sure you want to delete this class?');"
+                                >
+                                    Delete
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================== -->
+
+            <div class="empty-state">
+
+                <div class="empty-state-icon">
+                    🏫
+                </div>
+
+                <h3>
+                    No Classes Added
+                </h3>
+
+                <p>
+                    Add your first class using the form above.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- =================================================
+             INFORMATION BOX
+        ================================================== -->
+
+        <section class="info-box">
+
+            <div class="info-icon">
+                💡
+            </div>
+
+            <div>
+
+                <h3>
+                    Why Classes Matter
+                </h3>
+
+                <p>
+                    Classes and sections are the foundation
+                    of your timetable. After adding classes,
+                    you can add teachers and subjects and
+                    assign them to each class.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             NEXT STEP
+        ================================================== -->
+
+        <section class="next-step-card">
+
+            <div>
+
+                <span class="small-label">
+                    NEXT STEP
+                </span>
+
+                <h3>
+                    Add Teachers
+                </h3>
+
+                <p>
+                    Add the teachers who will teach the
+                    subjects in your school.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('teachers') }}"
+                class="primary-button"
+            >
+                Manage Teachers →
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="main-footer">
+
+        <p>
+            © 2026 AI-Assisted School Timetable Generator
+        </p>
+
+        <p>
+            Smart • Simple • Automated
+        </p>
+
+    </footer>
 
 </body>
-
-</html> 
+</html>

@@ -42,7 +42,7 @@ school_settings = {
 
 
 # =========================================================
-# INITIALIZE DATABASE
+# DATABASE INITIALIZATION
 # =========================================================
 
 def initialize_database():
@@ -88,7 +88,7 @@ def initialize_database():
 
 
 # =========================================================
-# HOME / DASHBOARD
+# DASHBOARD
 # =========================================================
 
 @app.route("/")
@@ -124,14 +124,7 @@ def index():
     )
 
 
-# =========================================================
-# HOME ALIAS
-# =========================================================
-# Some HTML files may use:
-# url_for('home')
-#
-# This alias prevents the Flask BuildError.
-
+# Allow templates using url_for('home')
 app.add_url_rule(
     "/",
     endpoint="home",
@@ -163,31 +156,31 @@ def settings():
             "16:00"
         )
 
-        school_settings["period_duration"] = int(
-            request.form.get(
-                "period_duration",
-                45
+        try:
+            school_settings["period_duration"] = int(
+                request.form.get("period_duration", 45)
             )
-        )
+        except ValueError:
+            school_settings["period_duration"] = 45
 
-        school_settings["number_of_periods"] = int(
-            request.form.get(
-                "number_of_periods",
-                7
+        try:
+            school_settings["number_of_periods"] = int(
+                request.form.get("number_of_periods", 7)
             )
-        )
+        except ValueError:
+            school_settings["number_of_periods"] = 7
 
         school_settings["break_start"] = request.form.get(
             "break_start",
             "12:00"
         )
 
-        school_settings["break_duration"] = int(
-            request.form.get(
-                "break_duration",
-                30
+        try:
+            school_settings["break_duration"] = int(
+                request.form.get("break_duration", 30)
             )
-        )
+        except ValueError:
+            school_settings["break_duration"] = 30
 
         working_days = request.form.getlist("working_days")
 
@@ -213,8 +206,15 @@ def classes():
 
     if request.method == "POST":
 
-        class_name = request.form.get("class_name", "").strip()
-        section = request.form.get("section", "").strip()
+        class_name = request.form.get(
+            "class_name",
+            ""
+        ).strip()
+
+        section = request.form.get(
+            "section",
+            ""
+        ).strip()
 
         if class_name and section:
 
@@ -252,15 +252,23 @@ def classes():
 # =========================================================
 # DELETE CLASS
 # =========================================================
+# IMPORTANT:
+# Template uses class_id, so the route also uses class_id.
 
-@app.route("/classes/delete/<int:id>")
-def delete_class(id):
+@app.route("/classes/delete/<int:class_id>")
+def delete_class(class_id):
 
     connection = get_db_connection()
 
+    # Delete related assignments first
+    connection.execute(
+        "DELETE FROM assignments WHERE class_id = ?",
+        (class_id,)
+    )
+
     connection.execute(
         "DELETE FROM classes WHERE id = ?",
-        (id,)
+        (class_id,)
     )
 
     connection.commit()
@@ -327,14 +335,20 @@ def teachers():
 # DELETE TEACHER
 # =========================================================
 
-@app.route("/teachers/delete/<int:id>")
-def delete_teacher(id):
+@app.route("/teachers/delete/<int:teacher_id>")
+def delete_teacher(teacher_id):
 
     connection = get_db_connection()
 
+    # Delete related assignments first
+    connection.execute(
+        "DELETE FROM assignments WHERE teacher_id = ?",
+        (teacher_id,)
+    )
+
     connection.execute(
         "DELETE FROM teachers WHERE id = ?",
-        (id,)
+        (teacher_id,)
     )
 
     connection.commit()
@@ -359,13 +373,13 @@ def subjects():
             ""
         ).strip()
 
-        periods_per_week = request.form.get(
-            "periods_per_week",
-            "1"
-        )
-
         try:
-            periods_per_week = int(periods_per_week)
+            periods_per_week = int(
+                request.form.get(
+                    "periods_per_week",
+                    1
+                )
+            )
         except ValueError:
             periods_per_week = 1
 
@@ -409,14 +423,20 @@ def subjects():
 # DELETE SUBJECT
 # =========================================================
 
-@app.route("/subjects/delete/<int:id>")
-def delete_subject(id):
+@app.route("/subjects/delete/<int:subject_id>")
+def delete_subject(subject_id):
 
     connection = get_db_connection()
 
+    # Delete related assignments first
+    connection.execute(
+        "DELETE FROM assignments WHERE subject_id = ?",
+        (subject_id,)
+    )
+
     connection.execute(
         "DELETE FROM subjects WHERE id = ?",
-        (id,)
+        (subject_id,)
     )
 
     connection.commit()
@@ -440,13 +460,13 @@ def assignments():
         subject_id = request.form.get("subject_id")
         teacher_id = request.form.get("teacher_id")
 
-        periods_per_week = request.form.get(
-            "periods_per_week",
-            "1"
-        )
-
         try:
-            periods_per_week = int(periods_per_week)
+            periods_per_week = int(
+                request.form.get(
+                    "periods_per_week",
+                    1
+                )
+            )
         except ValueError:
             periods_per_week = 1
 
@@ -457,8 +477,8 @@ def assignments():
             and periods_per_week > 0
         ):
 
-            # Check for duplicate assignment
-            existing_assignment = connection.execute(
+            # Prevent exact duplicate assignment
+            existing = connection.execute(
                 """
                 SELECT id
                 FROM assignments
@@ -473,7 +493,7 @@ def assignments():
                 )
             ).fetchone()
 
-            if not existing_assignment:
+            if not existing:
 
                 connection.execute(
                     """
@@ -570,14 +590,14 @@ def assignments():
 # DELETE ASSIGNMENT
 # =========================================================
 
-@app.route("/assignments/delete/<int:id>")
-def delete_assignment(id):
+@app.route("/assignments/delete/<int:assignment_id>")
+def delete_assignment(assignment_id):
 
     connection = get_db_connection()
 
     connection.execute(
         "DELETE FROM assignments WHERE id = ?",
-        (id,)
+        (assignment_id,)
     )
 
     connection.commit()
@@ -651,7 +671,7 @@ def generate_timetable():
     ]
 
     # -----------------------------------------------------
-    # CHECK SETTINGS
+    # VALIDATE SETTINGS
     # -----------------------------------------------------
 
     if not days:
@@ -709,27 +729,24 @@ def generate_timetable():
                     timetable[class_id][day][period] = None
 
     # -----------------------------------------------------
-    # TEACHER BUSY TRACKING
+    # TRACK TEACHER OCCUPANCY
     # -----------------------------------------------------
 
     teacher_busy = set()
 
     # -----------------------------------------------------
-    # CREATE LESSON LIST
+    # CREATE INDIVIDUAL LESSONS
     # -----------------------------------------------------
 
     lessons = []
 
     for assignment in assignments:
 
-        periods = assignment["periods_per_week"]
-
-        if periods is None:
-            periods = 1
-
         try:
-            periods = int(periods)
-        except ValueError:
+            periods = int(
+                assignment["periods_per_week"]
+            )
+        except (ValueError, TypeError):
             periods = 1
 
         if periods < 1:
@@ -737,33 +754,23 @@ def generate_timetable():
 
         for _ in range(periods):
 
-            lessons.append(
-                {
-                    "class_id": assignment["class_id"],
-                    "subject_id": assignment["subject_id"],
-                    "teacher_id": assignment["teacher_id"],
-                    "class_name": assignment["class_name"],
-                    "section": assignment["section"],
-                    "subject_name": assignment["subject_name"],
-                    "teacher_name": assignment["teacher_name"]
-                }
-            )
-
-    # -----------------------------------------------------
-    # RANDOMIZE LESSONS
-    # -----------------------------------------------------
+            lessons.append({
+                "class_id": assignment["class_id"],
+                "subject_id": assignment["subject_id"],
+                "teacher_id": assignment["teacher_id"],
+                "class_name": assignment["class_name"],
+                "section": assignment["section"],
+                "subject_name": assignment["subject_name"],
+                "teacher_name": assignment["teacher_name"]
+            })
 
     random.shuffle(lessons)
 
     # -----------------------------------------------------
-    # UNSCHEDULED LESSONS
+    # SCHEDULE LESSONS
     # -----------------------------------------------------
 
     unscheduled_lessons = []
-
-    # -----------------------------------------------------
-    # PLACE LESSONS
-    # -----------------------------------------------------
 
     for lesson in lessons:
 
@@ -779,17 +786,11 @@ def generate_timetable():
                 number_of_periods + 1
             ):
 
-                # -----------------------------------------
-                # CLASS CONFLICT CHECK
-                # -----------------------------------------
-
+                # Class already has a lesson
                 if timetable[class_id][day][period] is not None:
                     continue
 
-                # -----------------------------------------
-                # TEACHER CONFLICT CHECK
-                # -----------------------------------------
-
+                # Teacher already teaching somewhere else
                 teacher_slot = (
                     teacher_id,
                     day,
@@ -845,7 +846,7 @@ def generate_timetable():
         }
 
     # -----------------------------------------------------
-    # FINAL RESULT
+    # DISPLAY TIMETABLE
     # -----------------------------------------------------
 
     return render_template(
@@ -860,7 +861,7 @@ def generate_timetable():
 
 
 # =========================================================
-# START APPLICATION
+# RUN APPLICATION
 # =========================================================
 
 if __name__ == "__main__":
