@@ -24,7 +24,10 @@ def create_database():
 
     connection = get_db_connection()
 
-    # Classes table
+    # -----------------------------------------
+    # Classes
+    # -----------------------------------------
+
     connection.execute("""
         CREATE TABLE IF NOT EXISTS classes (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -33,7 +36,10 @@ def create_database():
         )
     """)
 
-    # Teachers table
+    # -----------------------------------------
+    # Teachers
+    # -----------------------------------------
+
     connection.execute("""
         CREATE TABLE IF NOT EXISTS teachers (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -42,12 +48,42 @@ def create_database():
         )
     """)
 
-    # Subjects table
+    # -----------------------------------------
+    # Subjects
+    # -----------------------------------------
+
     connection.execute("""
         CREATE TABLE IF NOT EXISTS subjects (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             subject_name TEXT NOT NULL,
             periods_per_week INTEGER NOT NULL
+        )
+    """)
+
+    # -----------------------------------------
+    # Assignments
+    # -----------------------------------------
+
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS assignments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+            class_id INTEGER NOT NULL,
+
+            subject_id INTEGER NOT NULL,
+
+            teacher_id INTEGER NOT NULL,
+
+            periods_per_week INTEGER NOT NULL,
+
+            FOREIGN KEY (class_id)
+                REFERENCES classes(id),
+
+            FOREIGN KEY (subject_id)
+                REFERENCES subjects(id),
+
+            FOREIGN KEY (teacher_id)
+                REFERENCES teachers(id)
         )
     """)
 
@@ -60,11 +96,17 @@ def create_database():
 # =========================================
 
 school_settings = {
+
     "school_name": "My School",
+
     "start_time": "08:30",
+
     "end_time": "15:30",
+
     "period_duration": 45,
+
     "number_of_periods": 8,
+
     "working_days": [
         "Monday",
         "Tuesday",
@@ -72,7 +114,9 @@ school_settings = {
         "Thursday",
         "Friday"
     ],
+
     "break_start": "12:30",
+
     "break_duration": 45
 }
 
@@ -86,26 +130,28 @@ def home():
 
     connection = get_db_connection()
 
-    classes = connection.execute(
-        """
-        SELECT * FROM classes
+    classes = connection.execute("""
+        SELECT *
+        FROM classes
         ORDER BY class_name, section
-        """
-    ).fetchall()
+    """).fetchall()
 
-    teachers = connection.execute(
-        """
-        SELECT * FROM teachers
+    teachers = connection.execute("""
+        SELECT *
+        FROM teachers
         ORDER BY teacher_name
-        """
-    ).fetchall()
+    """).fetchall()
 
-    subjects = connection.execute(
-        """
-        SELECT * FROM subjects
+    subjects = connection.execute("""
+        SELECT *
+        FROM subjects
         ORDER BY subject_name
-        """
-    ).fetchall()
+    """).fetchall()
+
+    assignments = connection.execute("""
+        SELECT *
+        FROM assignments
+    """).fetchall()
 
     connection.close()
 
@@ -114,7 +160,8 @@ def home():
         settings=school_settings,
         classes=classes,
         teachers=teachers,
-        subjects=subjects
+        subjects=subjects,
+        assignments=assignments
     )
 
 
@@ -127,11 +174,17 @@ def settings():
 
     if request.method == "POST":
 
-        school_settings["school_name"] = request.form["school_name"]
+        school_settings["school_name"] = (
+            request.form["school_name"]
+        )
 
-        school_settings["start_time"] = request.form["start_time"]
+        school_settings["start_time"] = (
+            request.form["start_time"]
+        )
 
-        school_settings["end_time"] = request.form["end_time"]
+        school_settings["end_time"] = (
+            request.form["end_time"]
+        )
 
         school_settings["period_duration"] = int(
             request.form["period_duration"]
@@ -141,11 +194,13 @@ def settings():
             request.form["number_of_periods"]
         )
 
-        school_settings["working_days"] = request.form.getlist(
-            "working_days"
+        school_settings["working_days"] = (
+            request.form.getlist("working_days")
         )
 
-        school_settings["break_start"] = request.form["break_start"]
+        school_settings["break_start"] = (
+            request.form["break_start"]
+        )
 
         school_settings["break_duration"] = int(
             request.form["break_duration"]
@@ -174,13 +229,15 @@ def classes():
 
         section = request.form["section"].strip().upper()
 
-        connection.execute(
-            """
-            INSERT INTO classes (class_name, section)
-            VALUES (?, ?)
-            """,
+        connection.execute("""
+            INSERT INTO classes
             (class_name, section)
-        )
+
+            VALUES (?, ?)
+        """, (
+            class_name,
+            section
+        ))
 
         connection.commit()
 
@@ -188,12 +245,12 @@ def classes():
 
         return redirect(url_for("classes"))
 
-    class_list = connection.execute(
-        """
-        SELECT * FROM classes
+    class_list = connection.execute("""
+        SELECT *
+        FROM classes
+
         ORDER BY class_name, section
-        """
-    ).fetchall()
+    """).fetchall()
 
     connection.close()
 
@@ -212,10 +269,12 @@ def delete_class(class_id):
 
     connection = get_db_connection()
 
-    connection.execute(
-        "DELETE FROM classes WHERE id = ?",
-        (class_id,)
-    )
+    connection.execute("""
+        DELETE FROM classes
+        WHERE id = ?
+    """, (
+        class_id,
+    ))
 
     connection.commit()
 
@@ -235,17 +294,23 @@ def teachers():
 
     if request.method == "POST":
 
-        teacher_name = request.form["teacher_name"].strip()
-
-        subjects = request.form["subjects"].strip()
-
-        connection.execute(
-            """
-            INSERT INTO teachers (teacher_name, subjects)
-            VALUES (?, ?)
-            """,
-            (teacher_name, subjects)
+        teacher_name = (
+            request.form["teacher_name"].strip()
         )
+
+        subjects = (
+            request.form["subjects"].strip()
+        )
+
+        connection.execute("""
+            INSERT INTO teachers
+            (teacher_name, subjects)
+
+            VALUES (?, ?)
+        """, (
+            teacher_name,
+            subjects
+        ))
 
         connection.commit()
 
@@ -253,12 +318,12 @@ def teachers():
 
         return redirect(url_for("teachers"))
 
-    teacher_list = connection.execute(
-        """
-        SELECT * FROM teachers
+    teacher_list = connection.execute("""
+        SELECT *
+        FROM teachers
+
         ORDER BY teacher_name
-        """
-    ).fetchall()
+    """).fetchall()
 
     connection.close()
 
@@ -277,10 +342,12 @@ def delete_teacher(teacher_id):
 
     connection = get_db_connection()
 
-    connection.execute(
-        "DELETE FROM teachers WHERE id = ?",
-        (teacher_id,)
-    )
+    connection.execute("""
+        DELETE FROM teachers
+        WHERE id = ?
+    """, (
+        teacher_id,
+    ))
 
     connection.commit()
 
@@ -300,23 +367,23 @@ def subjects():
 
     if request.method == "POST":
 
-        subject_name = request.form["subject_name"].strip()
+        subject_name = (
+            request.form["subject_name"].strip()
+        )
 
         periods_per_week = int(
             request.form["periods_per_week"]
         )
 
-        connection.execute(
-            """
+        connection.execute("""
             INSERT INTO subjects
             (subject_name, periods_per_week)
+
             VALUES (?, ?)
-            """,
-            (
-                subject_name,
-                periods_per_week
-            )
-        )
+        """, (
+            subject_name,
+            periods_per_week
+        ))
 
         connection.commit()
 
@@ -324,12 +391,12 @@ def subjects():
 
         return redirect(url_for("subjects"))
 
-    subject_list = connection.execute(
-        """
-        SELECT * FROM subjects
+    subject_list = connection.execute("""
+        SELECT *
+        FROM subjects
+
         ORDER BY subject_name
-        """
-    ).fetchall()
+    """).fetchall()
 
     connection.close()
 
@@ -348,16 +415,181 @@ def delete_subject(subject_id):
 
     connection = get_db_connection()
 
-    connection.execute(
-        "DELETE FROM subjects WHERE id = ?",
-        (subject_id,)
-    )
+    connection.execute("""
+        DELETE FROM subjects
+        WHERE id = ?
+    """, (
+        subject_id,
+    ))
 
     connection.commit()
 
     connection.close()
 
     return redirect(url_for("subjects"))
+
+
+# =========================================
+# ASSIGNMENTS
+# =========================================
+
+@app.route("/assignments", methods=["GET", "POST"])
+def assignments():
+
+    connection = get_db_connection()
+
+    # -----------------------------------------
+    # ADD ASSIGNMENT
+    # -----------------------------------------
+
+    if request.method == "POST":
+
+        class_id = int(
+            request.form["class_id"]
+        )
+
+        subject_id = int(
+            request.form["subject_id"]
+        )
+
+        teacher_id = int(
+            request.form["teacher_id"]
+        )
+
+        periods_per_week = int(
+            request.form["periods_per_week"]
+        )
+
+        connection.execute("""
+            INSERT INTO assignments
+            (
+                class_id,
+                subject_id,
+                teacher_id,
+                periods_per_week
+            )
+
+            VALUES (?, ?, ?, ?)
+        """, (
+            class_id,
+            subject_id,
+            teacher_id,
+            periods_per_week
+        ))
+
+        connection.commit()
+
+        connection.close()
+
+        return redirect(url_for("assignments"))
+
+    # -----------------------------------------
+    # Get Classes
+    # -----------------------------------------
+
+    class_list = connection.execute("""
+        SELECT *
+        FROM classes
+
+        ORDER BY class_name, section
+    """).fetchall()
+
+    # -----------------------------------------
+    # Get Teachers
+    # -----------------------------------------
+
+    teacher_list = connection.execute("""
+        SELECT *
+        FROM teachers
+
+        ORDER BY teacher_name
+    """).fetchall()
+
+    # -----------------------------------------
+    # Get Subjects
+    # -----------------------------------------
+
+    subject_list = connection.execute("""
+        SELECT *
+        FROM subjects
+
+        ORDER BY subject_name
+    """).fetchall()
+
+    # -----------------------------------------
+    # Get Assignments
+    # -----------------------------------------
+
+    assignment_list = connection.execute("""
+        SELECT
+
+            assignments.id,
+
+            assignments.periods_per_week,
+
+            classes.class_name,
+
+            classes.section,
+
+            subjects.subject_name,
+
+            teachers.teacher_name
+
+        FROM assignments
+
+        JOIN classes
+            ON assignments.class_id = classes.id
+
+        JOIN subjects
+            ON assignments.subject_id = subjects.id
+
+        JOIN teachers
+            ON assignments.teacher_id = teachers.id
+
+        ORDER BY
+            classes.class_name,
+            classes.section,
+            subjects.subject_name
+
+    """).fetchall()
+
+    connection.close()
+
+    return render_template(
+        "assignments.html",
+
+        classes=class_list,
+
+        teachers=teacher_list,
+
+        subjects=subject_list,
+
+        assignments=assignment_list
+    )
+
+
+# =========================================
+# DELETE ASSIGNMENT
+# =========================================
+
+@app.route("/assignments/delete/<int:assignment_id>")
+def delete_assignment(assignment_id):
+
+    connection = get_db_connection()
+
+    connection.execute("""
+        DELETE FROM assignments
+
+        WHERE id = ?
+    """, (
+        assignment_id,
+    ))
+
+    connection.commit()
+
+    connection.close()
+
+    return redirect(url_for("assignments"))
 
 
 # =========================================

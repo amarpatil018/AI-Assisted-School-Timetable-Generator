@@ -63,6 +63,10 @@
             Subjects
         </a>
 
+        <a href="{{ url_for('assignments') }}">
+            Assignments
+        </a>
+
         <a href="{{ url_for('settings') }}">
             Settings
         </a>
@@ -98,8 +102,9 @@
             </h1>
 
             <p class="description">
-                Manage classes, teachers, subjects and
-                school timings from one simple platform.
+                Manage classes, teachers, subjects,
+                assignments and school timings from
+                one simple platform.
             </p>
 
         </div>
@@ -211,6 +216,36 @@
 
 
         <!-- =====================================
+             ASSIGNMENTS CARD
+        ====================================== -->
+
+        <div class="dashboard-card">
+
+            <div class="card-icon">
+                🔗
+            </div>
+
+            <h2>
+                Teacher Assignments
+            </h2>
+
+            <p>
+                Connect classes, subjects and teachers
+                for automatic timetable generation.
+            </p>
+
+            <a
+                href="{{ url_for('assignments') }}"
+                class="card-button"
+            >
+                Manage Assignments
+            </a>
+
+        </div>
+
+
+
+        <!-- =====================================
              SETTINGS CARD
         ====================================== -->
 
@@ -269,7 +304,7 @@
         <div class="summary-grid">
 
 
-            <!-- Classes Summary -->
+            <!-- Classes -->
 
             <div class="summary-card">
 
@@ -293,7 +328,7 @@
 
 
 
-            <!-- Teachers Summary -->
+            <!-- Teachers -->
 
             <div class="summary-card">
 
@@ -317,7 +352,7 @@
 
 
 
-            <!-- Subjects Summary -->
+            <!-- Subjects -->
 
             <div class="summary-card">
 
@@ -333,6 +368,30 @@
 
                     <p>
                         Subjects Added
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Assignments -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    🔗
+                </div>
+
+                <div>
+
+                    <h3>
+                        {{ assignments|length }}
+                    </h3>
+
+                    <p>
+                        Assignments Added
                     </p>
 
                 </div>
@@ -397,9 +456,10 @@
                 </p>
 
                 <p class="generator-note">
-                    First, add your classes, teachers and
-                    subjects. The next step will connect
-                    them together.
+                    Add your classes, teachers, subjects
+                    and assignments first. The timetable
+                    generator will use this information
+                    in the next step.
                 </p>
 
             </div>
@@ -413,6 +473,47 @@
             </button>
 
         </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         ASSIGNMENT QUICK ACCESS
+    ========================================= -->
+
+    <section class="assignment-info">
+
+
+        <div class="assignment-info-icon">
+            🔗
+        </div>
+
+
+        <div>
+
+            <h3>
+                Teacher Assignments
+            </h3>
+
+            <p>
+                {{ assignments|length }}
+                assignment(s) are currently registered.
+                Connect every class with its required
+                subjects and teachers before generating
+                the timetable.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('assignments') }}"
+            class="card-button"
+        >
+            Manage Assignments
+        </a>
+
 
     </section>
 
@@ -435,22 +536,23 @@
 
                 <div
                     class="progress-fill"
-                    style="width: 62.5%;"
+                    style="width: 75%;"
                 ></div>
 
             </div>
 
 
             <span>
-                Step 5 of 8
+                Step 6 of 8
             </span>
 
         </div>
 
 
         <p>
-            School settings, classes, teachers and
-            subjects are now available.
+            School settings, classes, teachers,
+            subjects and teacher assignments
+            are now available.
         </p>
 
     </section>
