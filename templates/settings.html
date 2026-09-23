@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>School Settings - SmartSchool</title>
+    <title>School Settings</title>
 
     <link
         rel="stylesheet"
@@ -23,69 +23,65 @@
 <body>
 
 
-<!-- =========================================
-     HEADER
-========================================= -->
+<header class="main-header">
 
-<header class="header">
+    <div class="header-container">
 
-    <div class="logo">
+        <div class="logo">
 
-        <span class="logo-icon">
-            📚
-        </span>
+            <h1>SmartSchool</h1>
 
-        <span>
-            SmartSchool
-        </span>
+            <p>
+                AI-Assisted Timetable Generator
+            </p>
+
+        </div>
+
+
+        <nav class="main-nav">
+
+            <a href="{{ url_for('index') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('classes') }}">
+                Classes
+            </a>
+
+            <a href="{{ url_for('teachers') }}">
+                Teachers
+            </a>
+
+            <a href="{{ url_for('subjects') }}">
+                Subjects
+            </a>
+
+            <a href="{{ url_for('assignments') }}">
+                Assignments
+            </a>
+
+            <a
+                href="{{ url_for('settings') }}"
+                class="active"
+            >
+                Settings
+            </a>
+
+        </nav>
 
     </div>
-
-
-    <nav class="navigation">
-
-        <a href="{{ url_for('home') }}">
-            Dashboard
-        </a>
-
-        <a href="#">
-            Classes
-        </a>
-
-        <a href="#">
-            Teachers
-        </a>
-
-        <a href="#">
-            Subjects
-        </a>
-
-        <a
-            href="{{ url_for('settings') }}"
-            class="active"
-        >
-            Settings
-        </a>
-
-    </nav>
 
 </header>
 
 
 
-<!-- =========================================
-     SETTINGS PAGE
-========================================= -->
-
-<main class="settings-container">
+<main class="page-container">
 
 
-    <!-- Page Heading -->
-
-    <div class="page-heading">
+    <section class="page-heading">
 
         <p class="small-heading">
-            SCHOOL CONFIGURATION
+            CONFIGURATION
         </p>
 
         <h1>
@@ -93,100 +89,39 @@
         </h1>
 
         <p>
-            Configure the basic timetable rules
-            for your school.
+            Configure your school's timetable structure.
         </p>
 
-    </div>
+    </section>
 
 
 
-    <!-- =========================================
-         SETTINGS FORM
-    ========================================= -->
+    <section class="form-card">
 
-    <form method="POST">
-
-
-        <!-- School Information -->
-
-        <section class="settings-card">
-
-            <h2>
-                🏫 School Information
-            </h2>
-
-            <p class="section-description">
-                Enter the basic information about your school.
-            </p>
+        <form
+            method="POST"
+            action="{{ url_for('settings') }}"
+        >
 
 
-            <div class="form-group">
+            <div class="form-section">
 
-                <label for="school_name">
-                    School Name
-                </label>
-
-                <input
-                    type="text"
-                    id="school_name"
-                    name="school_name"
-                    value="{{ settings.school_name }}"
-                    placeholder="Example: ABC Public School"
-                    required
-                >
-
-            </div>
-
-        </section>
-
-
-
-        <!-- School Timing -->
-
-        <section class="settings-card">
-
-            <h2>
-                ⏰ School Timing
-            </h2>
-
-            <p class="section-description">
-                Set when the school starts and finishes.
-            </p>
-
-
-            <div class="form-row">
+                <h2>
+                    School Information
+                </h2>
 
 
                 <div class="form-group">
 
-                    <label for="start_time">
-                        School Start Time
+                    <label for="school_name">
+                        School Name
                     </label>
 
                     <input
-                        type="time"
-                        id="start_time"
-                        name="start_time"
-                        value="{{ settings.start_time }}"
-                        required
-                    >
-
-                </div>
-
-
-
-                <div class="form-group">
-
-                    <label for="end_time">
-                        School End Time
-                    </label>
-
-                    <input
-                        type="time"
-                        id="end_time"
-                        name="end_time"
-                        value="{{ settings.end_time }}"
+                        type="text"
+                        id="school_name"
+                        name="school_name"
+                        value="{{ settings.school_name }}"
                         required
                     >
 
@@ -196,203 +131,229 @@
 
 
 
-            <div class="form-row">
+            <div class="form-section">
+
+                <h2>
+                    School Timing
+                </h2>
 
 
-                <div class="form-group">
-
-                    <label for="number_of_periods">
-                        Number of Periods Per Day
-                    </label>
-
-                    <input
-                        type="number"
-                        id="number_of_periods"
-                        name="number_of_periods"
-                        min="1"
-                        max="15"
-                        value="{{ settings.number_of_periods }}"
-                        required
-                    >
-
-                </div>
+                <div class="form-grid">
 
 
+                    <div class="form-group">
 
-                <div class="form-group">
+                        <label for="start_time">
+                            School Start Time
+                        </label>
 
-                    <label for="period_duration">
-                        Period Duration (minutes)
-                    </label>
+                        <input
+                            type="time"
+                            id="start_time"
+                            name="start_time"
+                            value="{{ settings.start_time }}"
+                            required
+                        >
 
-                    <input
-                        type="number"
-                        id="period_duration"
-                        name="period_duration"
-                        min="15"
-                        max="120"
-                        value="{{ settings.period_duration }}"
-                        required
-                    >
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="end_time">
+                            School End Time
+                        </label>
+
+                        <input
+                            type="time"
+                            id="end_time"
+                            name="end_time"
+                            value="{{ settings.end_time }}"
+                            required
+                        >
+
+                    </div>
+
 
                 </div>
 
             </div>
 
-        </section>
+
+
+            <div class="form-section">
+
+                <h2>
+                    Period Configuration
+                </h2>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="period_duration">
+                            Period Duration (minutes)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="period_duration"
+                            name="period_duration"
+                            min="1"
+                            value="{{ settings.period_duration }}"
+                            required
+                        >
+
+                    </div>
 
 
 
-        <!-- Working Days -->
+                    <div class="form-group">
 
-        <section class="settings-card">
+                        <label for="number_of_periods">
+                            Number of Periods Per Day
+                        </label>
 
-            <h2>
-                📅 Working Days
-            </h2>
+                        <input
+                            type="number"
+                            id="number_of_periods"
+                            name="number_of_periods"
+                            min="1"
+                            max="15"
+                            value="{{ settings.number_of_periods }}"
+                            required
+                        >
 
-            <p class="section-description">
-                Select the days on which the school operates.
-            </p>
-
-
-            <div class="days-grid">
-
-
-                {% set days = [
-                    "Monday",
-                    "Tuesday",
-                    "Wednesday",
-                    "Thursday",
-                    "Friday",
-                    "Saturday",
-                    "Sunday"
-                ] %}
+                    </div>
 
 
-                {% for day in days %}
+                </div>
 
-                <label class="day-option">
+            </div>
 
-                    <input
-                        type="checkbox"
-                        name="working_days"
-                        value="{{ day }}"
 
-                        {% if day in settings.working_days %}
+
+            <div class="form-section">
+
+                <h2>
+                    Working Days
+                </h2>
+
+
+                <div class="days-grid">
+
+
+                    {% for day in [
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday",
+                        "Sunday"
+                    ] %}
+
+                    <label class="checkbox-label">
+
+                        <input
+                            type="checkbox"
+                            name="working_days"
+                            value="{{ day }}"
+                            {% if day in settings.working_days %}
                             checked
-                        {% endif %}
-                    >
+                            {% endif %}
+                        >
 
-                    <span>
-                        {{ day }}
-                    </span>
+                        <span>
+                            {{ day }}
+                        </span>
 
-                </label>
-
-                {% endfor %}
-
-
-            </div>
-
-        </section>
-
-
-
-        <!-- Break -->
-
-        <section class="settings-card">
-
-            <h2>
-                ☕ Break / Lunch
-            </h2>
-
-            <p class="section-description">
-                Configure the main break during the school day.
-            </p>
-
-
-            <div class="form-row">
-
-
-                <div class="form-group">
-
-                    <label for="break_start">
-                        Break Start Time
                     </label>
 
-                    <input
-                        type="time"
-                        id="break_start"
-                        name="break_start"
-                        value="{{ settings.break_start }}"
-                        required
-                    >
+                    {% endfor %}
 
-                </div>
-
-
-
-                <div class="form-group">
-
-                    <label for="break_duration">
-                        Break Duration (minutes)
-                    </label>
-
-                    <input
-                        type="number"
-                        id="break_duration"
-                        name="break_duration"
-                        min="5"
-                        max="120"
-                        value="{{ settings.break_duration }}"
-                        required
-                    >
 
                 </div>
 
             </div>
 
-        </section>
+
+
+            <div class="form-section">
+
+                <h2>
+                    Break Configuration
+                </h2>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="break_start">
+                            Break Start Time
+                        </label>
+
+                        <input
+                            type="time"
+                            id="break_start"
+                            name="break_start"
+                            value="{{ settings.break_start }}"
+                        >
+
+                    </div>
 
 
 
-        <!-- Buttons -->
+                    <div class="form-group">
 
-        <div class="settings-actions">
+                        <label for="break_duration">
+                            Break Duration (minutes)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="break_duration"
+                            name="break_duration"
+                            min="0"
+                            value="{{ settings.break_duration }}"
+                        >
+
+                    </div>
 
 
-            <a
-                href="{{ url_for('home') }}"
-                class="cancel-button"
-            >
-                Cancel
-            </a>
+                </div>
+
+            </div>
+
 
 
             <button
                 type="submit"
-                class="save-button"
+                class="primary-button"
             >
-                Save School Settings
+                Save Settings
             </button>
 
 
-        </div>
+        </form>
 
+    </section>
 
-    </form>
 
 </main>
 
 
 
-<!-- Footer -->
-
-<footer class="footer">
+<footer class="main-footer">
 
     <p>
-        © 2026 SmartSchool Timetable Management System
+        © 2026 SmartSchool —
+        AI-Assisted School Timetable Generator
     </p>
 
 </footer>
