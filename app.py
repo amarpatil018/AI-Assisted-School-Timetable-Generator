@@ -9,9 +9,9 @@ app.secret_key = "smartschool-secret-key"
 DATABASE = "school.db"
 
 
-# =========================================
+# =========================================================
 # DATABASE CONNECTION
-# =========================================
+# =========================================================
 
 def get_db_connection():
     connection = sqlite3.connect(DATABASE)
@@ -19,12 +19,12 @@ def get_db_connection():
     return connection
 
 
-# =========================================
+# =========================================================
 # SCHOOL SETTINGS
-# =========================================
+# =========================================================
 
 school_settings = {
-    "school_name": "SmartSchool",
+    "school_name": "AI-Assisted School Timetable Generator",
     "start_time": "09:00",
     "end_time": "16:00",
     "period_duration": 45,
@@ -34,17 +34,16 @@ school_settings = {
         "Tuesday",
         "Wednesday",
         "Thursday",
-        "Friday",
-        "Saturday"
+        "Friday"
     ],
-    "break_start": "12:15",
+    "break_start": "12:00",
     "break_duration": 30
 }
 
 
-# =========================================
-# DATABASE INITIALIZATION
-# =========================================
+# =========================================================
+# INITIALIZE DATABASE
+# =========================================================
 
 def initialize_database():
 
@@ -88,12 +87,9 @@ def initialize_database():
     connection.close()
 
 
-initialize_database()
-
-
-# =========================================
-# DASHBOARD
-# =========================================
+# =========================================================
+# HOME / DASHBOARD
+# =========================================================
 
 @app.route("/")
 def index():
@@ -101,20 +97,20 @@ def index():
     connection = get_db_connection()
 
     class_count = connection.execute(
-        "SELECT COUNT(*) AS count FROM classes"
-    ).fetchone()["count"]
+        "SELECT COUNT(*) FROM classes"
+    ).fetchone()[0]
 
     teacher_count = connection.execute(
-        "SELECT COUNT(*) AS count FROM teachers"
-    ).fetchone()["count"]
+        "SELECT COUNT(*) FROM teachers"
+    ).fetchone()[0]
 
     subject_count = connection.execute(
-        "SELECT COUNT(*) AS count FROM subjects"
-    ).fetchone()["count"]
+        "SELECT COUNT(*) FROM subjects"
+    ).fetchone()[0]
 
     assignment_count = connection.execute(
-        "SELECT COUNT(*) AS count FROM assignments"
-    ).fetchone()["count"]
+        "SELECT COUNT(*) FROM assignments"
+    ).fetchone()[0]
 
     connection.close()
 
@@ -123,13 +119,29 @@ def index():
         class_count=class_count,
         teacher_count=teacher_count,
         subject_count=subject_count,
-        assignment_count=assignment_count
+        assignment_count=assignment_count,
+        school_settings=school_settings
     )
 
 
-# =========================================
+# =========================================================
+# HOME ALIAS
+# =========================================================
+# Some HTML files may use:
+# url_for('home')
+#
+# This alias prevents the Flask BuildError.
+
+app.add_url_rule(
+    "/",
+    endpoint="home",
+    view_func=index
+)
+
+
+# =========================================================
 # SETTINGS
-# =========================================
+# =========================================================
 
 @app.route("/settings", methods=["GET", "POST"])
 def settings():
@@ -138,7 +150,7 @@ def settings():
 
         school_settings["school_name"] = request.form.get(
             "school_name",
-            "SmartSchool"
+            "AI-Assisted School Timetable Generator"
         )
 
         school_settings["start_time"] = request.form.get(
@@ -167,7 +179,7 @@ def settings():
 
         school_settings["break_start"] = request.form.get(
             "break_start",
-            "12:15"
+            "12:00"
         )
 
         school_settings["break_duration"] = int(
@@ -177,21 +189,22 @@ def settings():
             )
         )
 
-        school_settings["working_days"] = request.form.getlist(
-            "working_days"
-        )
+        working_days = request.form.getlist("working_days")
+
+        if working_days:
+            school_settings["working_days"] = working_days
 
         return redirect(url_for("settings"))
 
     return render_template(
         "settings.html",
-        settings=school_settings
+        school_settings=school_settings
     )
 
 
-# =========================================
+# =========================================================
 # CLASSES
-# =========================================
+# =========================================================
 
 @app.route("/classes", methods=["GET", "POST"])
 def classes():
@@ -200,15 +213,8 @@ def classes():
 
     if request.method == "POST":
 
-        class_name = request.form.get(
-            "class_name",
-            ""
-        ).strip()
-
-        section = request.form.get(
-            "section",
-            ""
-        ).strip()
+        class_name = request.form.get("class_name", "").strip()
+        section = request.form.get("section", "").strip()
 
         if class_name and section:
 
@@ -218,13 +224,14 @@ def classes():
                 (class_name, section)
                 VALUES (?, ?)
                 """,
-                (
-                    class_name,
-                    section
-                )
+                (class_name, section)
             )
 
             connection.commit()
+
+        connection.close()
+
+        return redirect(url_for("classes"))
 
     class_list = connection.execute(
         """
@@ -242,6 +249,10 @@ def classes():
     )
 
 
+# =========================================================
+# DELETE CLASS
+# =========================================================
+
 @app.route("/classes/delete/<int:id>")
 def delete_class(id):
 
@@ -258,9 +269,9 @@ def delete_class(id):
     return redirect(url_for("classes"))
 
 
-# =========================================
+# =========================================================
 # TEACHERS
-# =========================================
+# =========================================================
 
 @app.route("/teachers", methods=["GET", "POST"])
 def teachers():
@@ -287,13 +298,14 @@ def teachers():
                 (teacher_name, subjects)
                 VALUES (?, ?)
                 """,
-                (
-                    teacher_name,
-                    subjects
-                )
+                (teacher_name, subjects)
             )
 
             connection.commit()
+
+        connection.close()
+
+        return redirect(url_for("teachers"))
 
     teacher_list = connection.execute(
         """
@@ -311,6 +323,10 @@ def teachers():
     )
 
 
+# =========================================================
+# DELETE TEACHER
+# =========================================================
+
 @app.route("/teachers/delete/<int:id>")
 def delete_teacher(id):
 
@@ -327,9 +343,9 @@ def delete_teacher(id):
     return redirect(url_for("teachers"))
 
 
-# =========================================
+# =========================================================
 # SUBJECTS
-# =========================================
+# =========================================================
 
 @app.route("/subjects", methods=["GET", "POST"])
 def subjects():
@@ -343,12 +359,15 @@ def subjects():
             ""
         ).strip()
 
-        periods_per_week = int(
-            request.form.get(
-                "periods_per_week",
-                1
-            )
+        periods_per_week = request.form.get(
+            "periods_per_week",
+            "1"
         )
+
+        try:
+            periods_per_week = int(periods_per_week)
+        except ValueError:
+            periods_per_week = 1
 
         if subject_name and periods_per_week > 0:
 
@@ -366,6 +385,10 @@ def subjects():
 
             connection.commit()
 
+        connection.close()
+
+        return redirect(url_for("subjects"))
+
     subject_list = connection.execute(
         """
         SELECT *
@@ -381,6 +404,10 @@ def subjects():
         subjects=subject_list
     )
 
+
+# =========================================================
+# DELETE SUBJECT
+# =========================================================
 
 @app.route("/subjects/delete/<int:id>")
 def delete_subject(id):
@@ -398,9 +425,9 @@ def delete_subject(id):
     return redirect(url_for("subjects"))
 
 
-# =========================================
+# =========================================================
 # ASSIGNMENTS
-# =========================================
+# =========================================================
 
 @app.route("/assignments", methods=["GET", "POST"])
 def assignments():
@@ -409,76 +436,69 @@ def assignments():
 
     if request.method == "POST":
 
-        class_id = int(
-            request.form["class_id"]
+        class_id = request.form.get("class_id")
+        subject_id = request.form.get("subject_id")
+        teacher_id = request.form.get("teacher_id")
+
+        periods_per_week = request.form.get(
+            "periods_per_week",
+            "1"
         )
 
-        subject_id = int(
-            request.form["subject_id"]
-        )
+        try:
+            periods_per_week = int(periods_per_week)
+        except ValueError:
+            periods_per_week = 1
 
-        teacher_id = int(
-            request.form["teacher_id"]
-        )
+        if (
+            class_id
+            and subject_id
+            and teacher_id
+            and periods_per_week > 0
+        ):
 
-        periods_per_week = int(
-            request.form["periods_per_week"]
-        )
-
-        # Check whether this exact
-        # assignment already exists.
-
-        existing = connection.execute(
-            """
-            SELECT id
-            FROM assignments
-            WHERE class_id = ?
-            AND subject_id = ?
-            AND teacher_id = ?
-            """,
-            (
-                class_id,
-                subject_id,
-                teacher_id
-            )
-        ).fetchone()
-
-        if existing:
-
-            connection.execute(
+            # Check for duplicate assignment
+            existing_assignment = connection.execute(
                 """
-                UPDATE assignments
-                SET periods_per_week = ?
-                WHERE id = ?
-                """,
-                (
-                    periods_per_week,
-                    existing["id"]
-                )
-            )
-
-        else:
-
-            connection.execute(
-                """
-                INSERT INTO assignments
-                (
-                    class_id,
-                    subject_id,
-                    teacher_id,
-                    periods_per_week
-                )
-                VALUES (?, ?, ?, ?)
+                SELECT id
+                FROM assignments
+                WHERE class_id = ?
+                AND subject_id = ?
+                AND teacher_id = ?
                 """,
                 (
                     class_id,
                     subject_id,
-                    teacher_id,
-                    periods_per_week
+                    teacher_id
                 )
-            )
+            ).fetchone()
 
-        connection.commit()
+            if not existing_assignment:
+
+                connection.execute(
+                    """
+                    INSERT INTO assignments
+                    (
+                        class_id,
+                        subject_id,
+                        teacher_id,
+                        periods_per_week
+                    )
+                    VALUES (?, ?, ?, ?)
+                    """,
+                    (
+                        class_id,
+                        subject_id,
+                        teacher_id,
+                        periods_per_week
+                    )
+                )
+
+                connection.commit()
+
+        connection.close()
+
+        return redirect(url_for("assignments"))
 
     class_list = connection.execute(
         """
@@ -546,6 +566,10 @@ def assignments():
     )
 
 
+# =========================================================
+# DELETE ASSIGNMENT
+# =========================================================
+
 @app.route("/assignments/delete/<int:id>")
 def delete_assignment(id):
 
@@ -562,19 +586,18 @@ def delete_assignment(id):
     return redirect(url_for("assignments"))
 
 
-# =========================================
+# =========================================================
 # AUTOMATIC TIMETABLE GENERATOR
-# =========================================
+# =========================================================
 
 @app.route("/generate-timetable")
 def generate_timetable():
 
     connection = get_db_connection()
 
-    assignments = connection.execute("""
+    assignments = connection.execute(
+        """
         SELECT
-
-            assignments.id,
             assignments.class_id,
             assignments.subject_id,
             assignments.teacher_id,
@@ -584,7 +607,6 @@ def generate_timetable():
             classes.section,
 
             subjects.subject_name,
-            subjects.periods_per_week AS subject_periods,
 
             teachers.teacher_name
 
@@ -598,18 +620,29 @@ def generate_timetable():
 
         JOIN teachers
             ON assignments.teacher_id = teachers.id
-
-        ORDER BY
-            classes.class_name,
-            classes.section
-    """).fetchall()
+        """
+    ).fetchall()
 
     connection.close()
 
+    # -----------------------------------------------------
+    # NO ASSIGNMENTS
+    # -----------------------------------------------------
 
-    # =====================================
-    # SETTINGS
-    # =====================================
+    if not assignments:
+
+        return render_template(
+            "timetable.html",
+            timetable={},
+            days=school_settings["working_days"],
+            number_of_periods=school_settings["number_of_periods"],
+            class_information={},
+            unscheduled=[],
+            error=(
+                "No assignments found. "
+                "Please add teacher assignments first."
+            )
+        )
 
     days = school_settings["working_days"]
 
@@ -617,290 +650,127 @@ def generate_timetable():
         "number_of_periods"
     ]
 
-
-    validation_errors = []
-
-    conflicts = []
-
-    unscheduled_lessons = []
-
-
-    # =====================================
-    # BASIC VALIDATION
-    # =====================================
+    # -----------------------------------------------------
+    # CHECK SETTINGS
+    # -----------------------------------------------------
 
     if not days:
 
-        validation_errors.append(
-            "No working days are configured. "
-            "Please select at least one working day "
-            "in Settings."
+        return render_template(
+            "timetable.html",
+            timetable={},
+            days=[],
+            number_of_periods=number_of_periods,
+            class_information={},
+            unscheduled=[],
+            error=(
+                "No working days are configured. "
+                "Please configure working days in Settings."
+            )
         )
-
 
     if number_of_periods <= 0:
 
-        validation_errors.append(
-            "The number of periods must be greater "
-            "than zero."
-        )
-
-
-    if not assignments:
-
-        validation_errors.append(
-            "No teacher assignments were found. "
-            "Please create teacher assignments first."
-        )
-
-
-    if validation_errors:
-
         return render_template(
             "timetable.html",
-
             timetable={},
-
             days=days,
-
             number_of_periods=number_of_periods,
-
             class_information={},
-
             unscheduled=[],
-
-            conflicts=[],
-
-            validation_errors=validation_errors,
-
-            break_start=school_settings[
-                "break_start"
-            ],
-
-            break_duration=school_settings[
-                "break_duration"
-            ]
+            error=(
+                "The number of periods must be greater than zero."
+            )
         )
 
-
-    # =====================================
-    # CAPACITY CHECK
-    # =====================================
-
-    available_periods = (
-        len(days) * number_of_periods
-    )
-
-    class_totals = {}
-
-
-    for assignment in assignments:
-
-        class_id = assignment["class_id"]
-
-        class_totals[class_id] = (
-            class_totals.get(
-                class_id,
-                0
-            )
-            +
-            assignment["periods_per_week"]
-        )
-
-
-    capacity_errors = []
-
-
-    for assignment in assignments:
-
-        class_id = assignment["class_id"]
-
-        if (
-            class_totals[class_id]
-            >
-            available_periods
-        ):
-
-            capacity_errors.append(
-
-                f"{assignment['class_name']} "
-                f"{assignment['section']} requires "
-                f"{class_totals[class_id]} periods, "
-                f"but only "
-                f"{available_periods} periods are "
-                f"available per week."
-
-            )
-
-
-    capacity_errors = list(
-        dict.fromkeys(capacity_errors)
-    )
-
-
-    # =====================================
+    # -----------------------------------------------------
     # CREATE EMPTY TIMETABLE
-    # =====================================
+    # -----------------------------------------------------
 
     timetable = {}
 
-    class_information = {}
-
-
     for assignment in assignments:
 
         class_id = assignment["class_id"]
-
-        class_information[class_id] = {
-
-            "class_name":
-                assignment["class_name"],
-
-            "section":
-                assignment["section"]
-
-        }
-
 
         if class_id not in timetable:
 
             timetable[class_id] = {}
 
-
             for day in days:
 
                 timetable[class_id][day] = {}
-
 
                 for period in range(
                     1,
                     number_of_periods + 1
                 ):
 
-                    timetable[
-                        class_id
-                    ][day][period] = None
+                    timetable[class_id][day][period] = None
 
-
-    # =====================================
-    # CREATE LESSON LIST
-    # =====================================
-
-    lessons = []
-
-
-    assignment_validation_errors = []
-
-
-    for assignment in assignments:
-
-        assignment_periods = (
-            assignment["periods_per_week"]
-        )
-
-        subject_periods = (
-            assignment["subject_periods"]
-        )
-
-
-        if assignment_periods <= 0:
-
-            assignment_validation_errors.append(
-
-                f"{assignment['subject_name']} "
-                f"for "
-                f"{assignment['class_name']} "
-                f"{assignment['section']} "
-                f"has an invalid weekly "
-                f"period value."
-
-            )
-
-            continue
-
-
-        # Detect mismatch between
-        # subject configuration and assignment.
-
-        if assignment_periods != subject_periods:
-
-            assignment_validation_errors.append(
-
-                f"{assignment['subject_name']} "
-                f"for "
-                f"{assignment['class_name']} "
-                f"{assignment['section']} "
-                f"is assigned "
-                f"{assignment_periods} "
-                f"periods/week, while the "
-                f"subject is configured for "
-                f"{subject_periods} "
-                f"periods/week."
-
-            )
-
-
-        # Expand weekly periods into
-        # individual lessons.
-
-        for lesson_number in range(
-            assignment_periods
-        ):
-
-            lessons.append({
-
-                "assignment_id":
-                    assignment["id"],
-
-                "class_id":
-                    assignment["class_id"],
-
-                "subject_id":
-                    assignment["subject_id"],
-
-                "teacher_id":
-                    assignment["teacher_id"],
-
-                "class_name":
-                    assignment["class_name"],
-
-                "section":
-                    assignment["section"],
-
-                "subject_name":
-                    assignment["subject_name"],
-
-                "teacher_name":
-                    assignment["teacher_name"],
-
-                "lesson_number":
-                    lesson_number + 1
-
-            })
-
-
-    # =====================================
-    # RANDOMIZE LESSONS
-    # =====================================
-
-    random.shuffle(lessons)
-
-
-    # =====================================
-    # TRACK TEACHER OCCUPANCY
-    # =====================================
+    # -----------------------------------------------------
+    # TEACHER BUSY TRACKING
+    # -----------------------------------------------------
 
     teacher_busy = set()
 
+    # -----------------------------------------------------
+    # CREATE LESSON LIST
+    # -----------------------------------------------------
 
-    # =====================================
+    lessons = []
+
+    for assignment in assignments:
+
+        periods = assignment["periods_per_week"]
+
+        if periods is None:
+            periods = 1
+
+        try:
+            periods = int(periods)
+        except ValueError:
+            periods = 1
+
+        if periods < 1:
+            periods = 1
+
+        for _ in range(periods):
+
+            lessons.append(
+                {
+                    "class_id": assignment["class_id"],
+                    "subject_id": assignment["subject_id"],
+                    "teacher_id": assignment["teacher_id"],
+                    "class_name": assignment["class_name"],
+                    "section": assignment["section"],
+                    "subject_name": assignment["subject_name"],
+                    "teacher_name": assignment["teacher_name"]
+                }
+            )
+
+    # -----------------------------------------------------
+    # RANDOMIZE LESSONS
+    # -----------------------------------------------------
+
+    random.shuffle(lessons)
+
+    # -----------------------------------------------------
+    # UNSCHEDULED LESSONS
+    # -----------------------------------------------------
+
+    unscheduled_lessons = []
+
+    # -----------------------------------------------------
     # PLACE LESSONS
-    # =====================================
+    # -----------------------------------------------------
 
     for lesson in lessons:
 
         possible_slots = []
 
+        class_id = lesson["class_id"]
+        teacher_id = lesson["teacher_id"]
 
         for day in days:
 
@@ -909,48 +779,33 @@ def generate_timetable():
                 number_of_periods + 1
             ):
 
-                # ---------------------------------
+                # -----------------------------------------
                 # CLASS CONFLICT CHECK
-                # ---------------------------------
+                # -----------------------------------------
 
-                if (
-                    timetable[
-                        lesson["class_id"]
-                    ][day][period]
-                    is not None
-                ):
-
+                if timetable[class_id][day][period] is not None:
                     continue
 
-
-                # ---------------------------------
+                # -----------------------------------------
                 # TEACHER CONFLICT CHECK
-                # ---------------------------------
+                # -----------------------------------------
 
                 teacher_slot = (
-
-                    lesson["teacher_id"],
-
+                    teacher_id,
                     day,
-
                     period
-
                 )
 
-
                 if teacher_slot in teacher_busy:
-
                     continue
-
 
                 possible_slots.append(
                     (day, period)
                 )
 
-
-        # =================================
+        # -------------------------------------------------
         # PLACE LESSON
-        # =================================
+        # -------------------------------------------------
 
         if possible_slots:
 
@@ -958,22 +813,15 @@ def generate_timetable():
                 possible_slots
             )
 
-
-            timetable[
-                lesson["class_id"]
-            ][day][period] = lesson
-
+            timetable[class_id][day][period] = lesson
 
             teacher_busy.add(
-
                 (
-                    lesson["teacher_id"],
+                    teacher_id,
                     day,
                     period
                 )
-
             )
-
 
         else:
 
@@ -981,144 +829,46 @@ def generate_timetable():
                 lesson
             )
 
+    # -----------------------------------------------------
+    # CLASS INFORMATION
+    # -----------------------------------------------------
 
-    # =====================================
-    # VERIFY TEACHER CONFLICTS
-    # =====================================
+    class_information = {}
 
-    teacher_schedule = {}
+    for assignment in assignments:
 
+        class_id = assignment["class_id"]
 
-    for class_id in timetable:
+        class_information[class_id] = {
+            "class_name": assignment["class_name"],
+            "section": assignment["section"]
+        }
 
-        for day in timetable[class_id]:
-
-            for period in timetable[
-                class_id
-            ][day]:
-
-                lesson = timetable[
-                    class_id
-                ][day][period]
-
-
-                if lesson is None:
-                    continue
-
-
-                teacher_id = lesson[
-                    "teacher_id"
-                ]
-
-
-                key = (
-
-                    teacher_id,
-                    day,
-                    period
-
-                )
-
-
-                if key not in teacher_schedule:
-
-                    teacher_schedule[key] = []
-
-
-                teacher_schedule[
-                    key
-                ].append(lesson)
-
-
-    for key, lesson_list in (
-        teacher_schedule.items()
-    ):
-
-        if len(lesson_list) > 1:
-
-            teacher_name = lesson_list[
-                0
-            ]["teacher_name"]
-
-
-            conflicts.append(
-
-                f"Teacher conflict: "
-                f"{teacher_name} is assigned "
-                f"to more than one class on "
-                f"{key[1]}, Period {key[2]}."
-
-            )
-
-
-    conflicts = list(
-        dict.fromkeys(conflicts)
-    )
-
-
-    # =====================================
-    # FINAL VALIDATION
-    # =====================================
-
-    validation_errors.extend(
-        capacity_errors
-    )
-
-    validation_errors.extend(
-        assignment_validation_errors
-    )
-
-    validation_errors = list(
-        dict.fromkeys(validation_errors)
-    )
-
-
-    # =====================================
-    # DISPLAY TIMETABLE
-    # =====================================
+    # -----------------------------------------------------
+    # FINAL RESULT
+    # -----------------------------------------------------
 
     return render_template(
-
         "timetable.html",
-
         timetable=timetable,
-
         days=days,
-
-        number_of_periods=
-            number_of_periods,
-
-        class_information=
-            class_information,
-
-        unscheduled=
-            unscheduled_lessons,
-
-        conflicts=
-            conflicts,
-
-        validation_errors=
-            validation_errors,
-
-        break_start=
-            school_settings[
-                "break_start"
-            ],
-
-        break_duration=
-            school_settings[
-                "break_duration"
-            ]
-
+        number_of_periods=number_of_periods,
+        class_information=class_information,
+        unscheduled=unscheduled_lessons,
+        error=None
     )
 
 
-# =========================================
-# START FLASK APPLICATION
-# =========================================
+# =========================================================
+# START APPLICATION
+# =========================================================
 
 if __name__ == "__main__":
 
+    initialize_database()
+
     app.run(
-        debug=True
+        debug=True,
+        host="127.0.0.1",
+        port=5000
     )
