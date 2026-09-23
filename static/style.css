@@ -1,19 +1,31 @@
 /* =========================================
-   GENERAL
+   GLOBAL
 ========================================= */
 
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #f5f6f8;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #f7f7f7;
     color: #1e1e1e;
     line-height: 1.6;
+}
+
+
+a {
+    color: inherit;
+}
+
+
+button,
+input,
+select {
+    font-family: inherit;
 }
 
 
@@ -21,409 +33,93 @@ body {
    HEADER
 ========================================= */
 
-.header {
-    background-color: #ffffff;
-    min-height: 75px;
-    padding: 0 6%;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    border-bottom: 1px solid #e2e2e2;
-}
-
-
-.logo {
-    display: flex;
-    align-items: center;
-
-    gap: 10px;
-
-    font-size: 24px;
-    font-weight: bold;
-}
-
-
-.logo-icon {
-    font-size: 30px;
-}
-
-
-.navigation {
-    display: flex;
-    gap: 28px;
-}
-
-
-.navigation a {
-    text-decoration: none;
-
-    color: #555555;
-
-    font-size: 15px;
-    font-weight: 600;
-
-    padding: 8px 0;
-}
-
-
-.navigation a:hover {
-    color: #1e1e1e;
-}
-
-
-.navigation a.active {
-    color: #1e1e1e;
-
-    border-bottom: 3px solid #ffcc00;
-}
-
-
-/* =========================================
-   MAIN DASHBOARD
-========================================= */
-
-.container {
-    width: 88%;
-    max-width: 1250px;
-
-    margin: 40px auto;
-}
-
-
-/* =========================================
-   WELCOME
-========================================= */
-
-.welcome {
-    background-color: #ffcc00;
-
-    border-radius: 18px;
-
-    padding: 45px 50px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-bottom: 35px;
-}
-
-
-.small-heading {
-    font-size: 13px;
-
-    font-weight: bold;
-
-    letter-spacing: 1.5px;
-
-    margin-bottom: 8px;
-
-    color: #444444;
-}
-
-
-.welcome h1 {
-    font-size: 48px;
-
-    line-height: 1.1;
-
-    margin-bottom: 18px;
-}
-
-
-.description {
-    font-size: 18px;
-
-    max-width: 600px;
-}
-
-
-.welcome-icon {
-    font-size: 110px;
-}
-
-
-/* =========================================
-   DASHBOARD CARDS
-========================================= */
-
-.dashboard-grid {
-    display: grid;
-
-    grid-template-columns: repeat(4, 1fr);
-
-    gap: 20px;
-
-    margin-bottom: 40px;
-}
-
-
-.dashboard-card {
-    background-color: #ffffff;
-
-    border-radius: 15px;
-
-    padding: 28px;
-
-    border: 1px solid #e5e5e5;
-
-    transition: 0.2s ease;
-}
-
-
-.dashboard-card:hover {
-    transform: translateY(-4px);
-
-    box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.08);
-}
-
-
-.card-icon {
-    font-size: 38px;
-
-    margin-bottom: 15px;
-}
-
-
-.dashboard-card h2 {
-    font-size: 21px;
-
-    margin-bottom: 10px;
-}
-
-
-.dashboard-card p {
-    color: #666666;
-
-    font-size: 14px;
-
-    min-height: 70px;
-}
-
-
-.card-button {
-    display: inline-block;
-
-    margin-top: 18px;
-
-    border: none;
-
+.main-header {
     background-color: #1e1e1e;
-
-    color: #ffffff;
-
-    padding: 11px 15px;
-
-    border-radius: 7px;
-
-    cursor: pointer;
-
-    font-weight: bold;
-
-    text-decoration: none;
+    color: white;
+    border-bottom: 4px solid #ffcc00;
 }
 
 
-.card-button:hover {
-    background-color: #333333;
-}
+.header-container {
+    width: 92%;
+    max-width: 1400px;
+    margin: auto;
+    min-height: 80px;
 
-
-/* =========================================
-   TIMETABLE GENERATOR
-========================================= */
-
-.timetable-section {
-    margin-bottom: 40px;
-}
-
-
-.section-heading {
     display: flex;
-
-    align-items: center;
-
     justify-content: space-between;
-
-    margin-bottom: 18px;
-}
-
-
-.section-heading h2 {
-    font-size: 30px;
-}
-
-
-.coming-soon {
-    background-color: #eeeeee;
-
-    padding: 7px 14px;
-
-    border-radius: 20px;
-
-    font-size: 13px;
-
-    font-weight: bold;
-}
-
-
-.generator-box {
-    background-color: #ffffff;
-
-    border: 1px solid #e5e5e5;
-
-    border-radius: 15px;
-
-    padding: 30px;
-
-    display: flex;
-
     align-items: center;
 
-    gap: 25px;
+    gap: 30px;
 }
 
 
-.generator-icon {
-    width: 65px;
-    height: 65px;
+.logo h1 {
+    color: #ffcc00;
+    font-size: 25px;
+    margin-bottom: 2px;
+}
 
-    background-color: #ffcc00;
 
-    border-radius: 12px;
+.logo p {
+    color: #dddddd;
+    font-size: 12px;
+}
 
+
+.main-nav {
     display: flex;
-
     align-items: center;
-
-    justify-content: center;
-
-    font-size: 32px;
-
-    flex-shrink: 0;
+    gap: 5px;
+    flex-wrap: wrap;
 }
 
 
-.generator-content {
-    flex: 1;
-}
-
-
-.generator-content h3 {
-    font-size: 20px;
-
-    margin-bottom: 5px;
-}
-
-
-.generator-content p {
-    color: #666666;
-
+.main-nav a {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 10px 13px;
+    border-radius: 6px;
     font-size: 14px;
+    transition: 0.2s;
 }
 
 
-.generate-button {
-    padding: 12px 20px;
-
-    border: none;
-
-    border-radius: 7px;
-
-    background-color: #cccccc;
-
-    color: #777777;
-
-    font-weight: bold;
-
-    cursor: not-allowed;
+.main-nav a:hover,
+.main-nav a.active {
+    background-color: #ffcc00;
+    color: #1e1e1e;
 }
 
 
 /* =========================================
-   PROJECT PROGRESS
+   CONTAINERS
 ========================================= */
 
-.progress-section {
-    background-color: #ffffff;
-
-    border-radius: 15px;
-
-    padding: 30px;
-
-    border: 1px solid #e5e5e5;
-
-    margin-bottom: 40px;
-}
-
-
-.progress-section h2 {
-    margin-bottom: 20px;
-}
-
-
-.progress-bar-container {
-    display: flex;
-
-    align-items: center;
-
-    gap: 15px;
-}
-
-
-.progress-bar {
-    height: 12px;
-
-    background-color: #eeeeee;
-
-    border-radius: 10px;
-
-    flex: 1;
-
-    overflow: hidden;
-}
-
-
-.progress-fill {
-    height: 100%;
-
-    width: 33.33%;
-
-    background-color: #ffcc00;
-}
-
-
-.progress-bar-container span {
-    font-size: 14px;
-
-    font-weight: bold;
-}
-
-
-.progress-section p {
-    color: #666666;
-
-    margin-top: 12px;
-
-    font-size: 14px;
-}
-
-
-/* =========================================
-   SCHOOL SETTINGS PAGE
-========================================= */
-
-.settings-container {
-    width: 88%;
-
-    max-width: 1000px;
-
+.dashboard-container {
+    width: 92%;
+    max-width: 1400px;
     margin: 40px auto;
 }
 
+
+.page-container {
+    width: 88%;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+
+.timetable-page {
+    width: 94%;
+    max-width: 1400px;
+    margin: 40px auto;
+}
+
+
+/* =========================================
+   PAGE HEADING
+========================================= */
 
 .page-heading {
     margin-bottom: 30px;
@@ -431,186 +127,287 @@ body {
 
 
 .page-heading h1 {
-    font-size: 42px;
+    font-size: 38px;
+    margin: 5px 0 10px;
+}
 
+
+.page-heading p:last-child {
+    color: #666666;
+}
+
+
+.small-heading {
+    color: #777777;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+}
+
+
+/* =========================================
+   WELCOME
+========================================= */
+
+.welcome-section {
+    background-color: #ffcc00;
+    border-radius: 14px;
+    padding: 45px;
+    margin-bottom: 30px;
+}
+
+
+.welcome-content {
+    max-width: 800px;
+}
+
+
+.welcome-section h2 {
+    font-size: 42px;
+    margin: 8px 0 12px;
+}
+
+
+.welcome-section p:last-child {
+    font-size: 17px;
+    max-width: 700px;
+}
+
+
+/* =========================================
+   DASHBOARD CARDS
+========================================= */
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+
+.dashboard-card {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+    transition: 0.2s;
+}
+
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.1);
+}
+
+
+.card-icon {
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+
+.card-content h3 {
     margin-bottom: 8px;
 }
 
 
-.page-heading > p:last-child {
+.card-content p {
     color: #666666;
-}
-
-
-/* =========================================
-   SETTINGS CARDS
-========================================= */
-
-.settings-card {
-    background-color: #ffffff;
-
-    border: 1px solid #e5e5e5;
-
-    border-radius: 15px;
-
-    padding: 30px;
-
-    margin-bottom: 22px;
-}
-
-
-.settings-card h2 {
-    font-size: 22px;
-
-    margin-bottom: 6px;
-}
-
-
-.section-description {
-    color: #666666;
-
     font-size: 14px;
-
-    margin-bottom: 25px;
+    margin-bottom: 15px;
 }
 
 
-/* =========================================
-   FORM
-========================================= */
-
-.form-group {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 8px;
-
-    flex: 1;
-}
-
-
-.form-group label {
-    font-size: 14px;
-
+.card-link {
+    color: #1e1e1e;
     font-weight: bold;
+    font-size: 13px;
 }
 
 
-.form-group input {
-    width: 100%;
+/* =========================================
+   DASHBOARD SECTION
+========================================= */
 
-    padding: 12px 14px;
-
-    border: 1px solid #cccccc;
-
-    border-radius: 7px;
-
-    font-size: 15px;
-
-    background-color: #ffffff;
+.dashboard-section {
+    margin-top: 45px;
 }
 
 
-.form-group input:focus {
-    outline: none;
-
-    border-color: #1e1e1e;
-
-    box-shadow:
-        0 0 0 2px #ffcc00;
-}
-
-
-.form-row {
+.section-heading {
     display: flex;
-
+    justify-content: space-between;
+    align-items: center;
     gap: 20px;
-
     margin-bottom: 20px;
 }
 
 
-.form-row:last-child {
-    margin-bottom: 0;
+.section-heading h2 {
+    margin-top: 4px;
 }
 
 
 /* =========================================
-   WORKING DAYS
+   SUMMARY
 ========================================= */
 
-.days-grid {
+.summary-grid {
     display: grid;
-
     grid-template-columns: repeat(4, 1fr);
-
-    gap: 12px;
+    gap: 18px;
 }
 
 
-.day-option {
-    border: 1px solid #dddddd;
+.summary-card {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
 
-    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
 
-    padding: 13px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+}
+
+
+.summary-icon {
+    font-size: 32px;
+}
+
+
+.summary-card h3 {
+    font-size: 28px;
+    margin-bottom: 2px;
+}
+
+
+.summary-card p {
+    color: #666666;
+    font-size: 14px;
+}
+
+
+/* =========================================
+   GENERATOR
+========================================= */
+
+.generator-section {
+    margin-top: 45px;
+
+    background-color: #1e1e1e;
+    color: white;
+
+    border-radius: 14px;
+    padding: 30px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 30px;
+}
+
+
+.generator-content {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+
+.generator-icon {
+    font-size: 48px;
+}
+
+
+.generator-text h2 {
+    margin: 5px 0 8px;
+}
+
+
+.generator-text p:last-child {
+    color: #dddddd;
+    max-width: 700px;
+}
+
+
+.generator-action {
+    flex-shrink: 0;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.generate-button {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+
+    background-color: #ffcc00;
+    color: #1e1e1e;
+
+    border: none;
+
+    padding: 13px 20px;
+
+    border-radius: 7px;
+
+    font-weight: bold;
 
     cursor: pointer;
 
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-    background-color: #fafafa;
+    transition: 0.2s;
 }
 
 
-.day-option:hover {
-    border-color: #ffcc00;
-
-    background-color: #fffbea;
+.generate-button:hover {
+    background-color: #ffff00;
 }
 
 
-.day-option input {
-    width: 17px;
+.primary-button {
+    display: inline-block;
 
-    height: 17px;
+    background-color: #ffcc00;
+    color: #1e1e1e;
 
-    accent-color: #1e1e1e;
+    border: none;
+
+    padding: 13px 22px;
+
+    border-radius: 7px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
 }
 
 
-.day-option span {
-    font-size: 14px;
-
-    font-weight: 600;
+.primary-button:hover {
+    background-color: #ffff00;
 }
 
 
-/* =========================================
-   SETTINGS BUTTONS
-========================================= */
-
-.settings-actions {
-    display: flex;
-
-    justify-content: flex-end;
-
-    gap: 12px;
-
-    margin-bottom: 40px;
+.primary-button:disabled {
+    background-color: #cccccc;
+    color: #777777;
+    cursor: not-allowed;
 }
 
 
-.cancel-button {
+.secondary-button {
+    display: inline-block;
+
     text-decoration: none;
 
     background-color: #eeeeee;
-
     color: #1e1e1e;
 
     padding: 12px 20px;
@@ -621,256 +418,23 @@ body {
 }
 
 
-.cancel-button:hover {
+.secondary-button:hover {
     background-color: #dddddd;
 }
 
 
-.save-button {
-    border: none;
-
-    background-color: #ffcc00;
-
-    color: #1e1e1e;
-
-    padding: 12px 22px;
-
-    border-radius: 7px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-}
-
-
-.save-button:hover {
-    background-color: #e6b800;
-}
-
-
-/* =========================================
-   FOOTER
-========================================= */
-
-.footer {
-    background-color: #1e1e1e;
-
-    color: #ffffff;
-
-    text-align: center;
-
-    padding: 25px;
-
-    font-size: 14px;
-}
-
-
-/* =========================================
-   RESPONSIVE DESIGN
-========================================= */
-
-@media (max-width: 1000px) {
-
-    .dashboard-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .navigation {
-        gap: 15px;
-    }
-
-}
-
-
-@media (max-width: 700px) {
-
-    .header {
-        flex-direction: column;
-
-        padding: 20px;
-
-        gap: 15px;
-    }
-
-
-    .navigation {
-        flex-wrap: wrap;
-
-        justify-content: center;
-    }
-
-
-    .welcome {
-        padding: 30px;
-    }
-
-
-    .welcome h1 {
-        font-size: 38px;
-    }
-
-
-    .welcome-icon {
-        display: none;
-    }
-
-
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-
-
-    .generator-box {
-        flex-direction: column;
-
-        align-items: flex-start;
-    }
-
-
-    .generate-button {
-        width: 100%;
-    }
-
-
-    .settings-container {
-        width: 92%;
-    }
-
-
-    .page-heading h1 {
-        font-size: 34px;
-    }
-
-
-    .form-row {
-        flex-direction: column;
-    }
-
-
-    .days-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-
-    .settings-actions {
-        flex-direction: column;
-    }
-
-
-    .cancel-button,
-    .save-button {
-        width: 100%;
-
-        text-align: center;
-    }
-
-}
-/* =========================================
-   CLASSES PAGE
-========================================= */
-
-.classes-container {
-    width: 88%;
-    max-width: 1000px;
-    margin: 40px auto;
-}
-
-
-/* Add Class Form */
-
-.class-form {
-    display: flex;
-    align-items: flex-end;
-    gap: 20px;
-}
-
-
-.class-form .form-group {
-    flex: 1;
-}
-
-
-.class-submit {
-    display: flex;
-    align-items: flex-end;
-}
-
-
-/* Class List Heading */
-
-.class-list-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-
-.class-count {
-    background-color: #ffcc00;
-
-    padding: 7px 14px;
-
-    border-radius: 20px;
-
-    font-size: 13px;
-
-    font-weight: bold;
-}
-
-
-/* Table */
-
-.class-table-container {
-    overflow-x: auto;
-}
-
-
-.class-table {
-    width: 100%;
-
-    border-collapse: collapse;
-
-    margin-top: 10px;
-}
-
-
-.class-table th {
-    text-align: left;
-
-    background-color: #f5f5f5;
-
-    padding: 14px;
-
-    font-size: 14px;
-}
-
-
-.class-table td {
-    padding: 14px;
-
-    border-top: 1px solid #eeeeee;
-
-    font-size: 14px;
-}
-
-
-.class-table tbody tr:hover {
-    background-color: #fffbea;
-}
-
-
-/* Delete Button */
-
 .delete-button {
+    display: inline-block;
+
     text-decoration: none;
 
-    background-color: #eeeeee;
+    color: #b00000;
 
-    color: #d00000;
+    background-color: #fff0f0;
 
     padding: 7px 12px;
 
-    border-radius: 6px;
+    border-radius: 5px;
 
     font-size: 13px;
 
@@ -883,7 +447,333 @@ body {
 }
 
 
-/* Empty State */
+/* =========================================
+   QUICK ACCESS
+========================================= */
+
+.quick-section {
+    margin-top: 45px;
+}
+
+
+.quick-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    background-color: #ffffff;
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+}
+
+
+.quick-info-icon {
+    font-size: 40px;
+}
+
+
+.quick-info h3 {
+    margin-bottom: 5px;
+}
+
+
+.quick-info p {
+    color: #666666;
+}
+
+
+/* =========================================
+   PROGRESS
+========================================= */
+
+.progress-section {
+    margin-top: 45px;
+
+    background-color: #ffffff;
+
+    padding: 30px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+}
+
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.progress-number {
+    font-weight: bold;
+}
+
+
+.progress-bar {
+    height: 12px;
+
+    background-color: #eeeeee;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    margin-top: 20px;
+}
+
+
+.progress-fill {
+    height: 100%;
+
+    background-color: #ffcc00;
+}
+
+
+.progress-details {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 10px;
+
+    color: #666666;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   FORMS
+========================================= */
+
+.form-card {
+    background-color: #ffffff;
+
+    border-radius: 12px;
+
+    padding: 30px;
+
+    margin-bottom: 30px;
+
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+}
+
+
+.form-card h2 {
+    margin-bottom: 25px;
+}
+
+
+.form-section {
+    border-bottom: 1px solid #eeeeee;
+
+    padding-bottom: 25px;
+
+    margin-bottom: 25px;
+}
+
+
+.form-section h2 {
+    font-size: 20px;
+
+    margin-bottom: 18px;
+}
+
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 20px;
+}
+
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+
+.form-group label {
+    display: block;
+
+    font-weight: bold;
+
+    font-size: 14px;
+
+    margin-bottom: 7px;
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #dddddd;
+
+    border-radius: 7px;
+
+    background-color: #ffffff;
+
+    color: #1e1e1e;
+
+    font-size: 14px;
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+
+    border-color: #ffcc00;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(255, 204, 0, 0.15);
+}
+
+
+.form-group small {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #777777;
+
+    font-size: 12px;
+}
+
+
+.inline-form {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr auto;
+
+    gap: 20px;
+
+    align-items: end;
+}
+
+
+.form-submit {
+    margin-bottom: 18px;
+}
+
+
+/* =========================================
+   WORKING DAYS
+========================================= */
+
+.days-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+}
+
+
+.checkbox-label {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 12px;
+
+    border: 1px solid #dddddd;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+}
+
+
+.checkbox-label:hover {
+    background-color: #fff8d6;
+}
+
+
+.checkbox-label input {
+    accent-color: #ffcc00;
+}
+
+
+/* =========================================
+   TABLES
+========================================= */
+
+.table-card {
+    background-color: #ffffff;
+
+    border-radius: 12px;
+
+    padding: 25px;
+
+    margin-bottom: 30px;
+
+    box-shadow:
+        0 3px 15px
+        rgba(0, 0, 0, 0.05);
+}
+
+
+.table-container {
+    overflow-x: auto;
+}
+
+
+.data-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 650px;
+}
+
+
+.data-table th {
+    background-color: #ffcc00;
+
+    color: #1e1e1e;
+
+    padding: 13px;
+
+    text-align: left;
+
+    font-size: 14px;
+}
+
+
+.data-table td {
+    padding: 13px;
+
+    border-bottom: 1px solid #eeeeee;
+
+    font-size: 14px;
+}
+
+
+.data-table tbody tr:hover {
+    background-color: #fffdf0;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
 
 .empty-state {
     text-align: center;
@@ -895,9 +785,9 @@ body {
 
 
 .empty-icon {
-    font-size: 50px;
+    font-size: 45px;
 
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 
@@ -908,158 +798,9 @@ body {
 }
 
 
-/* Classes Mobile */
-
-@media (max-width: 700px) {
-
-    .classes-container {
-        width: 92%;
-    }
-
-    .class-form {
-        flex-direction: column;
-
-        align-items: stretch;
-    }
-
-    .class-submit {
-        width: 100%;
-    }
-
-    .class-submit .save-button {
-        width: 100%;
-    }
-
-    .class-list-heading {
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 10px;
-    }
-
-}
 /* =========================================
-   TEACHERS PAGE
+   ASSIGNMENTS
 ========================================= */
-
-.teachers-container {
-    width: 88%;
-    max-width: 1000px;
-    margin: 40px auto;
-}
-
-
-.teacher-form {
-    display: flex;
-    align-items: flex-end;
-    gap: 20px;
-}
-
-
-.teacher-form .form-group {
-    flex: 1;
-}
-
-
-.teacher-submit {
-    display: flex;
-    align-items: flex-end;
-}
-
-
-.input-help {
-    color: #777777;
-    font-size: 12px;
-    margin-top: 3px;
-}
-
-
-/* Teachers mobile */
-
-@media (max-width: 700px) {
-
-    .teachers-container {
-        width: 92%;
-    }
-
-    .teacher-form {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .teacher-submit {
-        width: 100%;
-    }
-
-    .teacher-submit .save-button {
-        width: 100%;
-    }
-
-}
-/* =========================================
-   SUBJECTS PAGE
-========================================= */
-
-.subjects-container {
-    width: 88%;
-    max-width: 1000px;
-    margin: 40px auto;
-}
-
-
-.subject-form {
-    display: flex;
-    align-items: flex-end;
-    gap: 20px;
-}
-
-
-.subject-form .form-group {
-    flex: 1;
-}
-
-
-.subject-submit {
-    display: flex;
-    align-items: flex-end;
-}
-
-
-/* Subjects Mobile */
-
-@media (max-width: 700px) {
-
-    .subjects-container {
-        width: 92%;
-    }
-
-    .subject-form {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .subject-submit {
-        width: 100%;
-    }
-
-    .subject-submit .save-button {
-        width: 100%;
-    }
-
-}
-/* =========================================
-   ASSIGNMENTS PAGE
-========================================= */
-
-.assignments-container {
-    width: 88%;
-    max-width: 1200px;
-    margin: 40px auto;
-}
-
-
-/* Assignment Form */
 
 .assignment-form {
     display: grid;
@@ -1084,14 +825,14 @@ body {
 
 .assignment-submit {
     display: flex;
+
     align-items: flex-end;
+
+    margin-bottom: 18px;
 }
 
 
-/* Select */
-
 .assignment-form select {
-
     width: 100%;
 
     padding: 12px;
@@ -1105,26 +846,21 @@ body {
     font-size: 14px;
 
     color: #1e1e1e;
-
 }
 
 
 .assignment-form select:focus {
-
     outline: none;
 
     border-color: #ffcc00;
 
     box-shadow:
-        0 0 0 2px rgba(255, 204, 0, 0.15);
-
+        0 0 0 2px
+        rgba(255, 204, 0, 0.15);
 }
 
 
-/* Warning */
-
 .assignment-warning {
-
     background-color: #fff8d6;
 
     border-left: 5px solid #ffcc00;
@@ -1134,45 +870,24 @@ body {
     margin-bottom: 20px;
 
     border-radius: 6px;
-
 }
 
 
 .assignment-warning strong {
-
     color: #1e1e1e;
-
 }
 
 
 .assignment-warning p {
-
     margin-top: 5px;
 
     color: #555555;
 
     font-size: 14px;
-
 }
 
-
-/* Disabled Button */
-
-.assignment-submit button:disabled {
-
-    background-color: #cccccc;
-
-    color: #777777;
-
-    cursor: not-allowed;
-
-}
-
-
-/* Information Box */
 
 .assignment-info {
-
     display: flex;
 
     align-items: center;
@@ -1188,107 +903,33 @@ body {
     border-radius: 12px;
 
     margin-top: 30px;
-
 }
 
 
 .assignment-info-icon {
-
     font-size: 40px;
-
 }
 
 
 .assignment-info h3 {
-
     margin-bottom: 7px;
-
 }
 
 
 .assignment-info p {
-
     color: #dddddd;
 
     line-height: 1.6;
 
     margin: 0;
-
 }
 
 
-/* Mobile */
-
-@media (max-width: 1000px) {
-
-    .assignment-form {
-
-        grid-template-columns: 1fr 1fr;
-
-    }
-
-    .assignment-submit {
-
-        grid-column: span 2;
-
-    }
-
-    .assignment-submit button {
-
-        width: 100%;
-
-    }
-
-}
-
-
-@media (max-width: 700px) {
-
-    .assignments-container {
-
-        width: 92%;
-
-    }
-
-    .assignment-form {
-
-        grid-template-columns: 1fr;
-
-    }
-
-    .assignment-submit {
-
-        grid-column: span 1;
-
-    }
-
-    .assignment-info {
-
-        flex-direction: column;
-
-        align-items: flex-start;
-
-    }
-
-}/* =========================================
-   TIMETABLE PAGE
+/* =========================================
+   TIMETABLE
 ========================================= */
 
-.timetable-page {
-
-    width: 94%;
-
-    max-width: 1400px;
-
-    margin: 40px auto;
-
-}
-
-
-/* Timetable Card */
-
 .timetable-card {
-
     background-color: #ffffff;
 
     border-radius: 12px;
@@ -1298,13 +939,12 @@ body {
     margin-top: 30px;
 
     box-shadow:
-        0 4px 18px rgba(0, 0, 0, 0.06);
-
+        0 4px 18px
+        rgba(0, 0, 0, 0.06);
 }
 
 
 .timetable-card-heading {
-
     display: flex;
 
     justify-content: space-between;
@@ -1312,39 +952,29 @@ body {
     align-items: center;
 
     margin-bottom: 20px;
-
 }
 
 
 .timetable-card-heading h2 {
-
     margin-top: 5px;
-
 }
 
 
-/* Timetable Table */
-
 .timetable-table-container {
-
     overflow-x: auto;
-
 }
 
 
 .timetable-table {
-
     width: 100%;
 
     border-collapse: collapse;
 
     min-width: 900px;
-
 }
 
 
 .timetable-table th {
-
     background-color: #ffcc00;
 
     color: #1e1e1e;
@@ -1354,12 +984,10 @@ body {
     text-align: center;
 
     font-size: 14px;
-
 }
 
 
 .timetable-table td {
-
     border: 1px solid #eeeeee;
 
     padding: 10px;
@@ -1369,30 +997,22 @@ body {
     min-width: 130px;
 
     height: 75px;
-
 }
 
 
 .timetable-table tbody tr:nth-child(even) {
-
     background-color: #fafafa;
-
 }
 
 
 .period-number {
-
     background-color: #f1f1f1;
 
     min-width: 100px;
-
 }
 
 
-/* Lesson */
-
 .lesson {
-
     background-color: #fff8d6;
 
     border-left: 4px solid #ffcc00;
@@ -1400,49 +1020,146 @@ body {
     border-radius: 6px;
 
     padding: 9px;
-
 }
 
 
 .lesson strong {
-
     display: block;
 
     color: #1e1e1e;
 
     margin-bottom: 5px;
-
 }
 
 
 .lesson span {
-
     display: block;
 
     color: #666666;
 
     font-size: 12px;
-
 }
 
 
-/* Free Period */
-
 .free-period {
-
     color: #aaaaaa;
 
     font-size: 13px;
 
     font-style: italic;
-
 }
 
 
-/* Error */
+/* =========================================
+   TIMETABLE VALIDATION
+========================================= */
+
+.timetable-validation {
+    display: flex;
+
+    gap: 20px;
+
+    align-items: flex-start;
+
+    background-color: #fff8d6;
+
+    border-left: 5px solid #ffcc00;
+
+    padding: 22px;
+
+    border-radius: 8px;
+
+    margin-top: 25px;
+}
+
+
+.validation-icon {
+    font-size: 32px;
+}
+
+
+.timetable-validation h3 {
+    margin-bottom: 10px;
+}
+
+
+.timetable-validation ul {
+    margin: 0;
+
+    padding-left: 20px;
+}
+
+
+.timetable-validation li {
+    margin-bottom: 6px;
+
+    color: #555555;
+}
+
+
+/* =========================================
+   SUCCESS MESSAGE
+========================================= */
+
+.success-message {
+    display: flex;
+
+    gap: 20px;
+
+    align-items: center;
+
+    background-color: #f0fff4;
+
+    border-left: 5px solid #2e8b57;
+
+    padding: 22px;
+
+    border-radius: 8px;
+
+    margin-top: 25px;
+}
+
+
+.success-icon {
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background-color: #2e8b57;
+
+    color: white;
+
+    font-size: 24px;
+
+    font-weight: bold;
+}
+
+
+.success-message h3 {
+    margin-bottom: 6px;
+}
+
+
+.success-message p {
+    margin: 0;
+
+    color: #555555;
+}
+
+
+/* =========================================
+   TIMETABLE ERROR
+========================================= */
 
 .timetable-error {
-
     display: flex;
 
     gap: 20px;
@@ -1457,36 +1174,44 @@ body {
 
     border-radius: 8px;
 
+    margin-top: 25px;
 }
 
 
 .error-icon {
-
     font-size: 35px;
-
 }
 
 
 .timetable-error h3 {
-
     margin-bottom: 8px;
-
 }
 
 
 .timetable-error p {
-
-    margin-bottom: 18px;
+    margin-bottom: 10px;
 
     color: #555555;
-
 }
 
 
-/* Warning */
+.timetable-error ul {
+    padding-left: 20px;
+}
+
+
+.timetable-error li {
+    margin-bottom: 6px;
+
+    color: #555555;
+}
+
+
+/* =========================================
+   TIMETABLE WARNING
+========================================= */
 
 .timetable-warning {
-
     background-color: #fff8d6;
 
     border-left: 5px solid #ffcc00;
@@ -1496,44 +1221,36 @@ body {
     border-radius: 8px;
 
     margin-top: 25px;
-
 }
 
 
 .timetable-warning h3 {
-
     margin-bottom: 8px;
-
 }
 
 
 .timetable-warning p {
-
     color: #555555;
-
 }
 
 
 .timetable-warning ul {
-
     margin-top: 10px;
 
     padding-left: 20px;
-
 }
 
 
 .timetable-warning li {
-
     margin-bottom: 5px;
-
 }
 
 
-/* Result Information */
+/* =========================================
+   GENERATOR RESULT
+========================================= */
 
 .generator-result-info {
-
     display: flex;
 
     align-items: center;
@@ -1549,39 +1266,33 @@ body {
     border-radius: 12px;
 
     margin-top: 30px;
-
 }
 
 
 .generator-result-icon {
-
     font-size: 40px;
-
 }
 
 
 .generator-result-info h3 {
-
     margin-bottom: 6px;
-
 }
 
 
 .generator-result-info p {
-
     color: #dddddd;
 
     margin: 0;
 
     line-height: 1.5;
-
 }
 
 
-/* Actions */
+/* =========================================
+   TIMETABLE ACTIONS
+========================================= */
 
 .timetable-actions {
-
     display: flex;
 
     justify-content: space-between;
@@ -1591,105 +1302,205 @@ body {
     margin-top: 30px;
 
     gap: 15px;
-
 }
 
 
-.secondary-button {
+/* =========================================
+   FOOTER
+========================================= */
 
-    display: inline-block;
+.main-footer {
+    margin-top: 60px;
 
-    text-decoration: none;
+    background-color: #1e1e1e;
 
-    background-color: #eeeeee;
+    color: #dddddd;
 
-    color: #1e1e1e;
+    text-align: center;
 
-    padding: 12px 20px;
+    padding: 25px;
 
-    border-radius: 7px;
-
-    font-weight: bold;
-
+    font-size: 13px;
 }
 
 
-.secondary-button:hover {
+/* =========================================
+   RESPONSIVE
+========================================= */
 
-    background-color: #dddddd;
+@media (max-width: 1100px) {
 
-}
-
-
-/* Mobile */
-
-@media (max-width: 700px) {
-
-    .timetable-page {
-
-        width: 92%;
-
+    .dashboard-cards {
+        grid-template-columns:
+            repeat(3, 1fr);
     }
 
 
-    .timetable-card {
-
-        padding: 15px;
-
+    .summary-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
     }
 
 
-    .generator-result-info {
+    .assignment-form {
+        grid-template-columns:
+            1fr 1fr;
+    }
 
+
+    .assignment-submit {
+        grid-column: span 2;
+    }
+
+
+    .assignment-submit button {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 800px) {
+
+    .header-container {
         flex-direction: column;
 
         align-items: flex-start;
 
+        padding: 20px 0;
+    }
+
+
+    .main-nav {
+        width: 100%;
+    }
+
+
+    .dashboard-cards {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .generator-section {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    .generator-action {
+        width: 100%;
+    }
+
+
+    .generator-action .generate-button {
+        width: 100%;
+    }
+
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .inline-form {
+        grid-template-columns: 1fr;
+    }
+
+
+    .form-submit {
+        margin-bottom: 0;
+    }
+
+
+    .days-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
     }
 
 
     .timetable-actions {
-
         flex-direction: column;
 
         align-items: stretch;
-
     }
 
 
     .timetable-actions a {
-
         text-align: center;
-
     }
-
-}.generate-button {
-
-    display: inline-block;
-
-    text-decoration: none;
-
-    text-align: center;
-
-    background-color: #ffcc00;
-
-    color: #1e1e1e;
-
-    border: none;
-
-    padding: 13px 20px;
-
-    border-radius: 7px;
-
-    font-weight: bold;
-
-    cursor: pointer;
 
 }
 
 
-.generate-button:hover {
+@media (max-width: 600px) {
 
-    background-color: #ffff00;
+    .dashboard-container,
+    .page-container,
+    .timetable-page {
+        width: 92%;
+    }
+
+
+    .welcome-section {
+        padding: 30px 25px;
+    }
+
+
+    .welcome-section h2 {
+        font-size: 32px;
+    }
+
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .section-heading {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    .days-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .assignment-form {
+        grid-template-columns: 1fr;
+    }
+
+
+    .assignment-submit {
+        grid-column: span 1;
+    }
+
+
+    .assignment-info {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    .timetable-validation {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+
+    .success-message {
+        align-items: flex-start;
+    }
 
 }
