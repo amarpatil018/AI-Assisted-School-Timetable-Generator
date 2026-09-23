@@ -1,6 +1,6 @@
-/* =========================================
+/* =====================================================
    GLOBAL
-========================================= */
+===================================================== */
 
 * {
     box-sizing: border-box;
@@ -29,14 +29,14 @@ select {
 }
 
 
-/* =========================================
+/* =====================================================
    HEADER
-========================================= */
+===================================================== */
 
 .main-header {
     background-color: #1e1e1e;
     color: white;
-    border-bottom: 4px solid #ffcc00;
+    width: 100%;
 }
 
 
@@ -44,7 +44,8 @@ select {
     width: 92%;
     max-width: 1400px;
     margin: auto;
-    min-height: 80px;
+
+    min-height: 90px;
 
     display: flex;
     justify-content: space-between;
@@ -54,18 +55,21 @@ select {
 }
 
 
-.logo h1 {
-    color: #ffcc00;
-    font-size: 25px;
+.logo-area h1 {
+    font-size: 21px;
     margin-bottom: 2px;
 }
 
 
-.logo p {
-    color: #dddddd;
-    font-size: 12px;
+.logo-area p {
+    font-size: 13px;
+    color: #cccccc;
 }
 
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
 
 .main-nav {
     display: flex;
@@ -77,11 +81,15 @@ select {
 
 .main-nav a {
     text-decoration: none;
-    color: #ffffff;
+    color: white;
+
     padding: 10px 13px;
+
     border-radius: 6px;
+
     font-size: 14px;
-    transition: 0.2s;
+
+    transition: 0.2s ease;
 }
 
 
@@ -92,301 +100,191 @@ select {
 }
 
 
-/* =========================================
-   CONTAINERS
-========================================= */
-
-.dashboard-container {
-    width: 92%;
-    max-width: 1400px;
-    margin: 40px auto;
-}
-
+/* =====================================================
+   PAGE
+===================================================== */
 
 .page-container {
-    width: 88%;
-    max-width: 1200px;
-    margin: 40px auto;
+    width: 90%;
+    max-width: 1250px;
+
+    margin: 45px auto;
 }
 
-
-.timetable-page {
-    width: 94%;
-    max-width: 1400px;
-    margin: 40px auto;
-}
-
-
-/* =========================================
-   PAGE HEADING
-========================================= */
 
 .page-heading {
     margin-bottom: 30px;
 }
 
 
-.page-heading h1 {
-    font-size: 38px;
-    margin: 5px 0 10px;
-}
+.section-label,
+.small-label {
+    display: block;
 
-
-.page-heading p:last-child {
-    color: #666666;
-}
-
-
-.small-heading {
     color: #777777;
+
     font-size: 12px;
     font-weight: bold;
+
     letter-spacing: 1.5px;
+
+    margin-bottom: 7px;
 }
 
 
-/* =========================================
-   WELCOME
-========================================= */
-
-.welcome-section {
-    background-color: #ffcc00;
-    border-radius: 14px;
-    padding: 45px;
-    margin-bottom: 30px;
-}
-
-
-.welcome-content {
-    max-width: 800px;
-}
-
-
-.welcome-section h2 {
-    font-size: 42px;
-    margin: 8px 0 12px;
-}
-
-
-.welcome-section p:last-child {
-    font-size: 17px;
-    max-width: 700px;
-}
-
-
-/* =========================================
-   DASHBOARD CARDS
-========================================= */
-
-.dashboard-cards {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 18px;
-}
-
-
-.dashboard-card {
-    background-color: #ffffff;
-    padding: 25px;
-    border-radius: 12px;
-    text-decoration: none;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
-    transition: 0.2s;
-}
-
-
-.dashboard-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.1);
-}
-
-
-.card-icon {
-    font-size: 35px;
-    margin-bottom: 15px;
-}
-
-
-.card-content h3 {
+.page-heading h2 {
+    font-size: 34px;
     margin-bottom: 8px;
 }
 
 
-.card-content p {
+.page-heading p {
     color: #666666;
-    font-size: 14px;
-    margin-bottom: 15px;
+    font-size: 16px;
 }
 
 
-.card-link {
-    color: #1e1e1e;
-    font-weight: bold;
-    font-size: 13px;
-}
+/* =====================================================
+   CARDS
+===================================================== */
 
+.content-card {
+    background-color: white;
 
-/* =========================================
-   DASHBOARD SECTION
-========================================= */
-
-.dashboard-section {
-    margin-top: 45px;
-}
-
-
-.section-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-
-.section-heading h2 {
-    margin-top: 4px;
-}
-
-
-/* =========================================
-   SUMMARY
-========================================= */
-
-.summary-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
-}
-
-
-.summary-card {
-    background-color: #ffffff;
-    padding: 25px;
     border-radius: 12px;
 
-    display: flex;
-    align-items: center;
-    gap: 18px;
+    padding: 28px;
 
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 28px;
+
+    box-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.06);
 }
 
 
-.summary-icon {
-    font-size: 32px;
-}
-
-
-.summary-card h3 {
-    font-size: 28px;
-    margin-bottom: 2px;
-}
-
-
-.summary-card p {
-    color: #666666;
-    font-size: 14px;
-}
-
-
-/* =========================================
-   GENERATOR
-========================================= */
-
-.generator-section {
-    margin-top: 45px;
-
-    background-color: #1e1e1e;
-    color: white;
-
-    border-radius: 14px;
-    padding: 30px;
-
+.card-heading {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    gap: 30px;
+    gap: 20px;
+
+    margin-bottom: 24px;
 }
 
 
-.generator-content {
-    display: flex;
-    align-items: center;
-    gap: 25px;
+.card-heading h3 {
+    font-size: 22px;
 }
 
 
-.generator-icon {
-    font-size: 48px;
-}
+.data-count {
+    background-color: #fff3b0;
 
-
-.generator-text h2 {
-    margin: 5px 0 8px;
-}
-
-
-.generator-text p:last-child {
-    color: #dddddd;
-    max-width: 700px;
-}
-
-
-.generator-action {
-    flex-shrink: 0;
-}
-
-
-/* =========================================
-   BUTTONS
-========================================= */
-
-.generate-button {
-    display: inline-block;
-    text-decoration: none;
-    text-align: center;
-
-    background-color: #ffcc00;
     color: #1e1e1e;
 
-    border: none;
+    padding: 7px 13px;
 
-    padding: 13px 20px;
+    border-radius: 20px;
+
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   FORMS
+===================================================== */
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(200px, 1fr)
+        minmax(200px, 1fr)
+        auto;
+
+    gap: 20px;
+
+    align-items: end;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.form-group label {
+    font-size: 14px;
+    font-weight: bold;
+
+    margin-bottom: 7px;
+}
+
+
+.form-group input,
+.form-group select {
+    width: 100%;
+
+    padding: 12px 13px;
+
+    border: 1px solid #dddddd;
 
     border-radius: 7px;
 
-    font-weight: bold;
+    background-color: white;
 
-    cursor: pointer;
+    color: #1e1e1e;
 
-    transition: 0.2s;
+    font-size: 14px;
+
+    outline: none;
 }
 
 
-.generate-button:hover {
-    background-color: #ffff00;
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #ffcc00;
+
+    box-shadow:
+        0 0 0 3px rgba(255, 204, 0, 0.15);
 }
 
+
+.form-submit {
+    display: flex;
+    align-items: flex-end;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
 
 .primary-button {
     display: inline-block;
 
-    background-color: #ffcc00;
-    color: #1e1e1e;
-
     border: none;
 
-    padding: 13px 22px;
+    background-color: #ffcc00;
+
+    color: #1e1e1e;
+
+    padding: 12px 20px;
 
     border-radius: 7px;
 
     font-weight: bold;
 
+    text-decoration: none;
+
     cursor: pointer;
 
-    transition: 0.2s;
+    transition: 0.2s ease;
+
+    white-space: nowrap;
 }
 
 
@@ -397,340 +295,20 @@ select {
 
 .primary-button:disabled {
     background-color: #cccccc;
+
     color: #777777;
+
     cursor: not-allowed;
 }
 
 
-.secondary-button {
-    display: inline-block;
-
-    text-decoration: none;
-
-    background-color: #eeeeee;
-    color: #1e1e1e;
-
-    padding: 12px 20px;
-
-    border-radius: 7px;
-
-    font-weight: bold;
-}
-
-
-.secondary-button:hover {
-    background-color: #dddddd;
-}
-
-
-.delete-button {
-    display: inline-block;
-
-    text-decoration: none;
-
-    color: #b00000;
-
-    background-color: #fff0f0;
-
-    padding: 7px 12px;
-
-    border-radius: 5px;
-
-    font-size: 13px;
-
-    font-weight: bold;
-}
-
-
-.delete-button:hover {
-    background-color: #ffe0e0;
-}
-
-
-/* =========================================
-   QUICK ACCESS
-========================================= */
-
-.quick-section {
-    margin-top: 45px;
-}
-
-
-.quick-info {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-
-    background-color: #ffffff;
-
-    padding: 25px;
-
-    border-radius: 12px;
-
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
-}
-
-
-.quick-info-icon {
-    font-size: 40px;
-}
-
-
-.quick-info h3 {
-    margin-bottom: 5px;
-}
-
-
-.quick-info p {
-    color: #666666;
-}
-
-
-/* =========================================
-   PROGRESS
-========================================= */
-
-.progress-section {
-    margin-top: 45px;
-
-    background-color: #ffffff;
-
-    padding: 30px;
-
-    border-radius: 12px;
-
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
-}
-
-
-.progress-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-}
-
-
-.progress-number {
-    font-weight: bold;
-}
-
-
-.progress-bar {
-    height: 12px;
-
-    background-color: #eeeeee;
-
-    border-radius: 20px;
-
-    overflow: hidden;
-
-    margin-top: 20px;
-}
-
-
-.progress-fill {
-    height: 100%;
-
-    background-color: #ffcc00;
-}
-
-
-.progress-details {
-    display: flex;
-    justify-content: space-between;
-
-    margin-top: 10px;
-
-    color: #666666;
-
-    font-size: 13px;
-}
-
-
-/* =========================================
-   FORMS
-========================================= */
-
-.form-card {
-    background-color: #ffffff;
-
-    border-radius: 12px;
-
-    padding: 30px;
-
-    margin-bottom: 30px;
-
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
-}
-
-
-.form-card h2 {
-    margin-bottom: 25px;
-}
-
-
-.form-section {
-    border-bottom: 1px solid #eeeeee;
-
-    padding-bottom: 25px;
-
-    margin-bottom: 25px;
-}
-
-
-.form-section h2 {
-    font-size: 20px;
-
-    margin-bottom: 18px;
-}
-
-
-.form-grid {
-    display: grid;
-
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 20px;
-}
-
-
-.form-group {
-    margin-bottom: 18px;
-}
-
-
-.form-group label {
-    display: block;
-
-    font-weight: bold;
-
-    font-size: 14px;
-
-    margin-bottom: 7px;
-}
-
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-    width: 100%;
-
-    padding: 12px;
-
-    border: 1px solid #dddddd;
-
-    border-radius: 7px;
-
-    background-color: #ffffff;
-
-    color: #1e1e1e;
-
-    font-size: 14px;
-}
-
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-
-    border-color: #ffcc00;
-
-    box-shadow:
-        0 0 0 2px
-        rgba(255, 204, 0, 0.15);
-}
-
-
-.form-group small {
-    display: block;
-
-    margin-top: 5px;
-
-    color: #777777;
-
-    font-size: 12px;
-}
-
-
-.inline-form {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr auto;
-
-    gap: 20px;
-
-    align-items: end;
-}
-
-
-.form-submit {
-    margin-bottom: 18px;
-}
-
-
-/* =========================================
-   WORKING DAYS
-========================================= */
-
-.days-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
-    gap: 12px;
-}
-
-
-.checkbox-label {
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    padding: 12px;
-
-    border: 1px solid #dddddd;
-
-    border-radius: 7px;
-
-    cursor: pointer;
-}
-
-
-.checkbox-label:hover {
-    background-color: #fff8d6;
-}
-
-
-.checkbox-label input {
-    accent-color: #ffcc00;
-}
-
-
-/* =========================================
-   TABLES
-========================================= */
-
-.table-card {
-    background-color: #ffffff;
-
-    border-radius: 12px;
-
-    padding: 25px;
-
-    margin-bottom: 30px;
-
-    box-shadow:
-        0 3px 15px
-        rgba(0, 0, 0, 0.05);
-}
-
+/* =====================================================
+   TABLE
+===================================================== */
 
 .table-container {
+    width: 100%;
+
     overflow-x: auto;
 }
 
@@ -749,7 +327,7 @@ select {
 
     color: #1e1e1e;
 
-    padding: 13px;
+    padding: 14px;
 
     text-align: left;
 
@@ -758,7 +336,7 @@ select {
 
 
 .data-table td {
-    padding: 13px;
+    padding: 14px;
 
     border-bottom: 1px solid #eeeeee;
 
@@ -767,130 +345,112 @@ select {
 
 
 .data-table tbody tr:hover {
-    background-color: #fffdf0;
+    background-color: #fffbea;
 }
 
 
-/* =========================================
-   EMPTY STATE
-========================================= */
-
-.empty-state {
-    text-align: center;
-
-    padding: 50px 20px;
-
-    color: #666666;
+.data-table tbody tr:last-child td {
+    border-bottom: none;
 }
 
 
-.empty-icon {
-    font-size: 45px;
+/* =====================================================
+   BADGES
+===================================================== */
 
-    margin-bottom: 12px;
-}
+.section-badge {
+    display: inline-block;
 
+    background-color: #f1f1f1;
 
-.empty-state h3 {
     color: #1e1e1e;
 
-    margin-bottom: 5px;
+    padding: 5px 10px;
+
+    border-radius: 5px;
+
+    font-size: 13px;
+
+    font-weight: bold;
 }
 
 
-/* =========================================
-   ASSIGNMENTS
-========================================= */
+.muted-text {
+    color: #999999;
 
-.assignment-form {
-    display: grid;
-
-    grid-template-columns:
-        1.2fr
-        1.5fr
-        1.5fr
-        1fr
-        auto;
-
-    align-items: end;
-
-    gap: 18px;
+    font-style: italic;
 }
 
 
-.assignment-form .form-group {
-    min-width: 0;
+/* =====================================================
+   DELETE BUTTON
+===================================================== */
+
+.delete-button {
+    display: inline-block;
+
+    text-decoration: none;
+
+    background-color: #f3f3f3;
+
+    color: #c00000;
+
+    padding: 7px 12px;
+
+    border-radius: 6px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    transition: 0.2s ease;
 }
 
 
-.assignment-submit {
-    display: flex;
-
-    align-items: flex-end;
-
-    margin-bottom: 18px;
+.delete-button:hover {
+    background-color: #ffe2e2;
 }
 
 
-.assignment-form select {
-    width: 100%;
+/* =====================================================
+   WARNING
+===================================================== */
 
-    padding: 12px;
-
-    border: 1px solid #dddddd;
-
-    border-radius: 7px;
-
-    background-color: #ffffff;
-
-    font-size: 14px;
-
-    color: #1e1e1e;
-}
-
-
-.assignment-form select:focus {
-    outline: none;
-
-    border-color: #ffcc00;
-
-    box-shadow:
-        0 0 0 2px
-        rgba(255, 204, 0, 0.15);
-}
-
-
-.assignment-warning {
+.warning-box {
     background-color: #fff8d6;
 
     border-left: 5px solid #ffcc00;
 
     padding: 15px 18px;
 
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 
     border-radius: 6px;
 }
 
 
-.assignment-warning strong {
-    color: #1e1e1e;
+.warning-box strong {
+    display: block;
+
+    margin-bottom: 5px;
 }
 
 
-.assignment-warning p {
-    margin-top: 5px;
-
+.warning-box p {
     color: #555555;
 
     font-size: 14px;
 }
 
 
-.assignment-info {
+/* =====================================================
+   INFO BOX
+===================================================== */
+
+.info-box {
     display: flex;
 
-    align-items: center;
+    align-items: flex-start;
 
     gap: 20px;
 
@@ -902,35 +462,170 @@ select {
 
     border-radius: 12px;
 
-    margin-top: 30px;
+    margin-bottom: 28px;
 }
 
 
-.assignment-info-icon {
-    font-size: 40px;
+.info-icon {
+    font-size: 35px;
+
+    min-width: 45px;
 }
 
 
-.assignment-info h3 {
+.info-box h3 {
     margin-bottom: 7px;
 }
 
 
-.assignment-info p {
+.info-box p {
     color: #dddddd;
 
-    line-height: 1.6;
+    font-size: 14px;
 
-    margin: 0;
+    line-height: 1.7;
 }
 
 
-/* =========================================
+/* =====================================================
+   NEXT STEP
+===================================================== */
+
+.next-step-card {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 25px;
+
+    background-color: white;
+
+    border-radius: 12px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+
+.next-step-card h3 {
+    margin-bottom: 6px;
+}
+
+
+.next-step-card p {
+    color: #666666;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.empty-state {
+    text-align: center;
+
+    padding: 55px 20px;
+
+    color: #666666;
+}
+
+
+.empty-state-icon {
+    font-size: 48px;
+
+    margin-bottom: 12px;
+}
+
+
+.empty-state h3 {
+    color: #1e1e1e;
+
+    margin-bottom: 6px;
+}
+
+
+.empty-state p {
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   ASSIGNMENTS
+===================================================== */
+
+.assignment-form {
+    display: grid;
+
+    grid-template-columns:
+        1.2fr
+        1.4fr
+        1.4fr
+        1fr
+        auto;
+
+    gap: 16px;
+
+    align-items: end;
+}
+
+
+.assignment-form select,
+.assignment-form input {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #dddddd;
+
+    border-radius: 7px;
+
+    background-color: white;
+
+    color: #1e1e1e;
+
+    font-size: 14px;
+}
+
+
+.assignment-form select:focus,
+.assignment-form input:focus {
+    outline: none;
+
+    border-color: #ffcc00;
+
+    box-shadow:
+        0 0 0 3px rgba(255, 204, 0, 0.15);
+}
+
+
+.assignment-submit {
+    display: flex;
+
+    align-items: flex-end;
+}
+
+
+/* =====================================================
    TIMETABLE
-========================================= */
+===================================================== */
+
+.timetable-page {
+    width: 94%;
+
+    max-width: 1400px;
+
+    margin: 40px auto;
+}
+
 
 .timetable-card {
-    background-color: #ffffff;
+    background-color: white;
 
     border-radius: 12px;
 
@@ -939,8 +634,7 @@ select {
     margin-top: 30px;
 
     box-shadow:
-        0 4px 18px
-        rgba(0, 0, 0, 0.06);
+        0 4px 18px rgba(0, 0, 0, 0.06);
 }
 
 
@@ -952,11 +646,6 @@ select {
     align-items: center;
 
     margin-bottom: 20px;
-}
-
-
-.timetable-card-heading h2 {
-    margin-top: 5px;
 }
 
 
@@ -1050,115 +739,6 @@ select {
 }
 
 
-/* =========================================
-   TIMETABLE VALIDATION
-========================================= */
-
-.timetable-validation {
-    display: flex;
-
-    gap: 20px;
-
-    align-items: flex-start;
-
-    background-color: #fff8d6;
-
-    border-left: 5px solid #ffcc00;
-
-    padding: 22px;
-
-    border-radius: 8px;
-
-    margin-top: 25px;
-}
-
-
-.validation-icon {
-    font-size: 32px;
-}
-
-
-.timetable-validation h3 {
-    margin-bottom: 10px;
-}
-
-
-.timetable-validation ul {
-    margin: 0;
-
-    padding-left: 20px;
-}
-
-
-.timetable-validation li {
-    margin-bottom: 6px;
-
-    color: #555555;
-}
-
-
-/* =========================================
-   SUCCESS MESSAGE
-========================================= */
-
-.success-message {
-    display: flex;
-
-    gap: 20px;
-
-    align-items: center;
-
-    background-color: #f0fff4;
-
-    border-left: 5px solid #2e8b57;
-
-    padding: 22px;
-
-    border-radius: 8px;
-
-    margin-top: 25px;
-}
-
-
-.success-icon {
-    width: 42px;
-
-    height: 42px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background-color: #2e8b57;
-
-    color: white;
-
-    font-size: 24px;
-
-    font-weight: bold;
-}
-
-
-.success-message h3 {
-    margin-bottom: 6px;
-}
-
-
-.success-message p {
-    margin: 0;
-
-    color: #555555;
-}
-
-
-/* =========================================
-   TIMETABLE ERROR
-========================================= */
-
 .timetable-error {
     display: flex;
 
@@ -1173,8 +753,6 @@ select {
     padding: 25px;
 
     border-radius: 8px;
-
-    margin-top: 25px;
 }
 
 
@@ -1182,34 +760,6 @@ select {
     font-size: 35px;
 }
 
-
-.timetable-error h3 {
-    margin-bottom: 8px;
-}
-
-
-.timetable-error p {
-    margin-bottom: 10px;
-
-    color: #555555;
-}
-
-
-.timetable-error ul {
-    padding-left: 20px;
-}
-
-
-.timetable-error li {
-    margin-bottom: 6px;
-
-    color: #555555;
-}
-
-
-/* =========================================
-   TIMETABLE WARNING
-========================================= */
 
 .timetable-warning {
     background-color: #fff8d6;
@@ -1224,31 +774,12 @@ select {
 }
 
 
-.timetable-warning h3 {
-    margin-bottom: 8px;
-}
-
-
-.timetable-warning p {
-    color: #555555;
-}
-
-
 .timetable-warning ul {
     margin-top: 10px;
 
     padding-left: 20px;
 }
 
-
-.timetable-warning li {
-    margin-bottom: 5px;
-}
-
-
-/* =========================================
-   GENERATOR RESULT
-========================================= */
 
 .generator-result-info {
     display: flex;
@@ -1274,11 +805,6 @@ select {
 }
 
 
-.generator-result-info h3 {
-    margin-bottom: 6px;
-}
-
-
 .generator-result-info p {
     color: #dddddd;
 
@@ -1287,10 +813,6 @@ select {
     line-height: 1.5;
 }
 
-
-/* =========================================
-   TIMETABLE ACTIONS
-========================================= */
 
 .timetable-actions {
     display: flex;
@@ -1305,62 +827,59 @@ select {
 }
 
 
-/* =========================================
+.secondary-button {
+    display: inline-block;
+
+    text-decoration: none;
+
+    background-color: #eeeeee;
+
+    color: #1e1e1e;
+
+    padding: 12px 20px;
+
+    border-radius: 7px;
+
+    font-weight: bold;
+}
+
+
+.secondary-button:hover {
+    background-color: #dddddd;
+}
+
+
+/* =====================================================
    FOOTER
-========================================= */
+===================================================== */
 
 .main-footer {
     margin-top: 60px;
 
-    background-color: #1e1e1e;
-
-    color: #dddddd;
-
-    text-align: center;
-
     padding: 25px;
 
-    font-size: 13px;
+    background-color: #1e1e1e;
+
+    color: white;
+
+    text-align: center;
 }
 
 
-/* =========================================
+.main-footer p {
+    color: #cccccc;
+
+    font-size: 13px;
+
+    margin: 3px;
+}
+
+
+/* =====================================================
    RESPONSIVE
-========================================= */
+===================================================== */
 
 @media (max-width: 1100px) {
-
-    .dashboard-cards {
-        grid-template-columns:
-            repeat(3, 1fr);
-    }
-
-
-    .summary-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-
-    .assignment-form {
-        grid-template-columns:
-            1fr 1fr;
-    }
-
-
-    .assignment-submit {
-        grid-column: span 2;
-    }
-
-
-    .assignment-submit button {
-        width: 100%;
-    }
-
-}
-
-
-@media (max-width: 800px) {
 
     .header-container {
         flex-direction: column;
@@ -1376,58 +895,50 @@ select {
     }
 
 
-    .dashboard-cards {
-        grid-template-columns:
-            repeat(2, 1fr);
+    .assignment-form {
+        grid-template-columns: 1fr 1fr;
     }
 
 
-    .generator-section {
-        flex-direction: column;
-
-        align-items: flex-start;
+    .assignment-submit {
+        grid-column: span 2;
     }
 
 
-    .generator-action {
+    .assignment-submit .primary-button {
         width: 100%;
     }
 
+}
 
-    .generator-action .generate-button {
-        width: 100%;
-    }
 
+@media (max-width: 800px) {
 
     .form-grid {
         grid-template-columns: 1fr;
     }
 
 
-    .inline-form {
-        grid-template-columns: 1fr;
-    }
-
-
     .form-submit {
-        margin-bottom: 0;
+        width: 100%;
     }
 
 
-    .days-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
+    .form-submit .primary-button {
+        width: 100%;
     }
 
 
-    .timetable-actions {
+    .next-step-card {
         flex-direction: column;
 
-        align-items: stretch;
+        align-items: flex-start;
     }
 
 
-    .timetable-actions a {
+    .next-step-card .primary-button {
+        width: 100%;
+
         text-align: center;
     }
 
@@ -1436,42 +947,27 @@ select {
 
 @media (max-width: 600px) {
 
-    .dashboard-container,
-    .page-container,
-    .timetable-page {
+    .page-container {
         width: 92%;
+
+        margin: 30px auto;
     }
 
 
-    .welcome-section {
-        padding: 30px 25px;
+    .page-heading h2 {
+        font-size: 28px;
     }
 
 
-    .welcome-section h2 {
-        font-size: 32px;
+    .content-card {
+        padding: 18px;
     }
 
 
-    .dashboard-cards {
-        grid-template-columns: 1fr;
-    }
+    .main-nav a {
+        font-size: 13px;
 
-
-    .summary-grid {
-        grid-template-columns: 1fr;
-    }
-
-
-    .section-heading {
-        flex-direction: column;
-
-        align-items: flex-start;
-    }
-
-
-    .days-grid {
-        grid-template-columns: 1fr;
+        padding: 8px 10px;
     }
 
 
@@ -1485,22 +981,20 @@ select {
     }
 
 
-    .assignment-info {
+    .info-box {
         flex-direction: column;
-
-        align-items: flex-start;
     }
 
 
-    .timetable-validation {
+    .timetable-actions {
         flex-direction: column;
 
-        gap: 10px;
+        align-items: stretch;
     }
 
 
-    .success-message {
-        align-items: flex-start;
+    .timetable-actions a {
+        text-align: center;
     }
 
 }
