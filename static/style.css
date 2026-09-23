@@ -1270,4 +1270,426 @@ body {
 
     }
 
+}/* =========================================
+   TIMETABLE PAGE
+========================================= */
+
+.timetable-page {
+
+    width: 94%;
+
+    max-width: 1400px;
+
+    margin: 40px auto;
+
+}
+
+
+/* Timetable Card */
+
+.timetable-card {
+
+    background-color: #ffffff;
+
+    border-radius: 12px;
+
+    padding: 25px;
+
+    margin-top: 30px;
+
+    box-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.06);
+
+}
+
+
+.timetable-card-heading {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+
+}
+
+
+.timetable-card-heading h2 {
+
+    margin-top: 5px;
+
+}
+
+
+/* Timetable Table */
+
+.timetable-table-container {
+
+    overflow-x: auto;
+
+}
+
+
+.timetable-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 900px;
+
+}
+
+
+.timetable-table th {
+
+    background-color: #ffcc00;
+
+    color: #1e1e1e;
+
+    padding: 14px;
+
+    text-align: center;
+
+    font-size: 14px;
+
+}
+
+
+.timetable-table td {
+
+    border: 1px solid #eeeeee;
+
+    padding: 10px;
+
+    text-align: center;
+
+    min-width: 130px;
+
+    height: 75px;
+
+}
+
+
+.timetable-table tbody tr:nth-child(even) {
+
+    background-color: #fafafa;
+
+}
+
+
+.period-number {
+
+    background-color: #f1f1f1;
+
+    min-width: 100px;
+
+}
+
+
+/* Lesson */
+
+.lesson {
+
+    background-color: #fff8d6;
+
+    border-left: 4px solid #ffcc00;
+
+    border-radius: 6px;
+
+    padding: 9px;
+
+}
+
+
+.lesson strong {
+
+    display: block;
+
+    color: #1e1e1e;
+
+    margin-bottom: 5px;
+
+}
+
+
+.lesson span {
+
+    display: block;
+
+    color: #666666;
+
+    font-size: 12px;
+
+}
+
+
+/* Free Period */
+
+.free-period {
+
+    color: #aaaaaa;
+
+    font-size: 13px;
+
+    font-style: italic;
+
+}
+
+
+/* Error */
+
+.timetable-error {
+
+    display: flex;
+
+    gap: 20px;
+
+    align-items: flex-start;
+
+    background-color: #fff0f0;
+
+    border-left: 5px solid #d00000;
+
+    padding: 25px;
+
+    border-radius: 8px;
+
+}
+
+
+.error-icon {
+
+    font-size: 35px;
+
+}
+
+
+.timetable-error h3 {
+
+    margin-bottom: 8px;
+
+}
+
+
+.timetable-error p {
+
+    margin-bottom: 18px;
+
+    color: #555555;
+
+}
+
+
+/* Warning */
+
+.timetable-warning {
+
+    background-color: #fff8d6;
+
+    border-left: 5px solid #ffcc00;
+
+    padding: 20px;
+
+    border-radius: 8px;
+
+    margin-top: 25px;
+
+}
+
+
+.timetable-warning h3 {
+
+    margin-bottom: 8px;
+
+}
+
+
+.timetable-warning p {
+
+    color: #555555;
+
+}
+
+
+.timetable-warning ul {
+
+    margin-top: 10px;
+
+    padding-left: 20px;
+
+}
+
+
+.timetable-warning li {
+
+    margin-bottom: 5px;
+
+}
+
+
+/* Result Information */
+
+.generator-result-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    background-color: #1e1e1e;
+
+    color: white;
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    margin-top: 30px;
+
+}
+
+
+.generator-result-icon {
+
+    font-size: 40px;
+
+}
+
+
+.generator-result-info h3 {
+
+    margin-bottom: 6px;
+
+}
+
+
+.generator-result-info p {
+
+    color: #dddddd;
+
+    margin: 0;
+
+    line-height: 1.5;
+
+}
+
+
+/* Actions */
+
+.timetable-actions {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 30px;
+
+    gap: 15px;
+
+}
+
+
+.secondary-button {
+
+    display: inline-block;
+
+    text-decoration: none;
+
+    background-color: #eeeeee;
+
+    color: #1e1e1e;
+
+    padding: 12px 20px;
+
+    border-radius: 7px;
+
+    font-weight: bold;
+
+}
+
+
+.secondary-button:hover {
+
+    background-color: #dddddd;
+
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .timetable-page {
+
+        width: 92%;
+
+    }
+
+
+    .timetable-card {
+
+        padding: 15px;
+
+    }
+
+
+    .generator-result-info {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+    .timetable-actions {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .timetable-actions a {
+
+        text-align: center;
+
+    }
+
+}.generate-button {
+
+    display: inline-block;
+
+    text-decoration: none;
+
+    text-align: center;
+
+    background-color: #ffcc00;
+
+    color: #1e1e1e;
+
+    border: none;
+
+    padding: 13px 20px;
+
+    border-radius: 7px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+.generate-button:hover {
+
+    background-color: #ffff00;
+
 }

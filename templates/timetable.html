@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Generated Timetable - SmartSchool</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header class="header">
+
+    <div class="logo">
+
+        <span class="logo-icon">
+            📚
+        </span>
+
+        <span>
+            SmartSchool
+        </span>
+
+    </div>
+
+
+    <nav class="navigation">
+
+        <a href="{{ url_for('home') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('classes') }}">
+            Classes
+        </a>
+
+        <a href="{{ url_for('teachers') }}">
+            Teachers
+        </a>
+
+        <a href="{{ url_for('subjects') }}">
+            Subjects
+        </a>
+
+        <a href="{{ url_for('assignments') }}">
+            Assignments
+        </a>
+
+        <a
+            href="{{ url_for('settings') }}"
+        >
+            Settings
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<main class="timetable-page">
+
+
+    <!-- PAGE HEADING -->
+
+    <div class="page-heading">
+
+        <p class="small-heading">
+            AUTOMATION
+        </p>
+
+        <h1>
+            Generated Timetable
+        </h1>
+
+        <p>
+            Automatically generated timetable
+            based on your school configuration
+            and teacher assignments.
+        </p>
+
+    </div>
+
+
+
+    <!-- =========================================
+         ERROR
+    ========================================= -->
+
+    {% if error %}
+
+    <section class="timetable-error">
+
+        <div class="error-icon">
+            ⚠️
+        </div>
+
+        <div>
+
+            <h3>
+                Cannot Generate Timetable
+            </h3>
+
+            <p>
+                {{ error }}
+            </p>
+
+            <a
+                href="{{ url_for('assignments') }}"
+                class="card-button"
+            >
+                Manage Assignments
+            </a>
+
+        </div>
+
+    </section>
+
+    {% else %}
+
+
+
+    <!-- =========================================
+         UNSCHEDULED WARNING
+    ========================================= -->
+
+    {% if unscheduled %}
+
+    <section class="timetable-warning">
+
+        <h3>
+            ⚠️ Some lessons could not be scheduled
+        </h3>
+
+        <p>
+            There are not enough available time slots
+            for all required lessons.
+        </p>
+
+        <ul>
+
+            {% for lesson in unscheduled %}
+
+            <li>
+
+                {{ lesson["class_name"] }}
+                -
+                {{ lesson["section"] }}
+
+                :
+                {{ lesson["subject_name"] }}
+
+                —
+                {{ lesson["teacher_name"] }}
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </section>
+
+    {% endif %}
+
+
+
+    <!-- =========================================
+         CLASS TIMETABLES
+    ========================================= -->
+
+    {% for class_id, class_schedule in timetable.items() %}
+
+
+    <section class="timetable-card">
+
+
+        <!-- CLASS TITLE -->
+
+        <div class="timetable-card-heading">
+
+            <div>
+
+                <p class="small-heading">
+                    CLASS TIMETABLE
+                </p>
+
+                <h2>
+
+                    {{ class_information[class_id]["class_name"] }}
+
+                    -
+
+                    {{ class_information[class_id]["section"] }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- TIMETABLE -->
+
+        <div class="timetable-table-container">
+
+            <table class="timetable-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Period
+                        </th>
+
+                        {% for day in days %}
+
+                        <th>
+                            {{ day }}
+                        </th>
+
+                        {% endfor %}
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for period in range(
+                        1,
+                        number_of_periods + 1
+                    ) %}
+
+                    <tr>
+
+                        <td class="period-number">
+
+                            <strong>
+                                Period {{ period }}
+                            </strong>
+
+                        </td>
+
+
+                        {% for day in days %}
+
+                        <td>
+
+                            {% set lesson =
+                                class_schedule[day][period]
+                            %}
+
+
+                            {% if lesson %}
+
+                            <div class="lesson">
+
+                                <strong>
+                                    {{ lesson["subject_name"] }}
+                                </strong>
+
+                                <span>
+                                    {{ lesson["teacher_name"] }}
+                                </span>
+
+                            </div>
+
+                            {% else %}
+
+                            <div class="free-period">
+
+                                Free
+
+                            </div>
+
+                            {% endif %}
+
+                        </td>
+
+                        {% endfor %}
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+    </section>
+
+
+    {% endfor %}
+
+
+
+    <!-- =========================================
+         GENERATOR INFORMATION
+    ========================================= -->
+
+    <section class="generator-result-info">
+
+        <div class="generator-result-icon">
+            🤖
+        </div>
+
+        <div>
+
+            <h3>
+                Timetable Generated Successfully
+            </h3>
+
+            <p>
+                The generator checks that a class and
+                teacher are not assigned to two lessons
+                during the same time slot.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    {% endif %}
+
+
+
+    <!-- =========================================
+         ACTIONS
+    ========================================= -->
+
+    <div class="timetable-actions">
+
+        <a
+            href="{{ url_for('home') }}"
+            class="secondary-button"
+        >
+            ← Dashboard
+        </a>
+
+
+        <a
+            href="{{ url_for('generate_timetable') }}"
+            class="save-button"
+        >
+            🔄 Generate Again
+        </a>
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer class="footer">
+
+    <p>
+        © 2026 SmartSchool Timetable Management System
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>
