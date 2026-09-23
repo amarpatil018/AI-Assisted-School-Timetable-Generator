@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Generated Timetable - SmartSchool</title>
+    <title>Final Timetable</title>
 
     <link
         rel="stylesheet"
@@ -23,141 +23,193 @@
 <body>
 
 
-<!-- =========================================
-     HEADER
-========================================= -->
+<header class="main-header">
 
-<header class="header">
+    <div class="header-container">
 
-    <div class="logo">
+        <div class="logo">
 
-        <span class="logo-icon">
-            📚
-        </span>
+            <h1>SmartSchool</h1>
 
-        <span>
-            SmartSchool
-        </span>
+            <p>
+                AI-Assisted Timetable Generator
+            </p>
+
+        </div>
+
+
+        <nav class="main-nav">
+
+            <a href="{{ url_for('index') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('classes') }}">
+                Classes
+            </a>
+
+            <a href="{{ url_for('teachers') }}">
+                Teachers
+            </a>
+
+            <a href="{{ url_for('subjects') }}">
+                Subjects
+            </a>
+
+            <a href="{{ url_for('assignments') }}">
+                Assignments
+            </a>
+
+            <a href="{{ url_for('settings') }}">
+                Settings
+            </a>
+
+        </nav>
 
     </div>
-
-
-    <nav class="navigation">
-
-        <a href="{{ url_for('home') }}">
-            Dashboard
-        </a>
-
-        <a href="{{ url_for('classes') }}">
-            Classes
-        </a>
-
-        <a href="{{ url_for('teachers') }}">
-            Teachers
-        </a>
-
-        <a href="{{ url_for('subjects') }}">
-            Subjects
-        </a>
-
-        <a href="{{ url_for('assignments') }}">
-            Assignments
-        </a>
-
-        <a
-            href="{{ url_for('settings') }}"
-        >
-            Settings
-        </a>
-
-    </nav>
 
 </header>
 
 
-
-<!-- =========================================
-     MAIN
-========================================= -->
 
 <main class="timetable-page">
 
 
     <!-- PAGE HEADING -->
 
-    <div class="page-heading">
+    <section class="page-heading">
 
         <p class="small-heading">
-            AUTOMATION
+            FINAL TIMETABLE
         </p>
 
         <h1>
-            Generated Timetable
+            School Timetable
         </h1>
 
         <p>
-            Automatically generated timetable
-            based on your school configuration
-            and teacher assignments.
+            Automatically generated timetable with
+            class and teacher conflict checking.
         </p>
 
-    </div>
+    </section>
 
 
 
-    <!-- =========================================
-         ERROR
-    ========================================= -->
+    <!-- VALIDATION -->
 
-    {% if error %}
+    {% if validation_errors %}
 
-    <section class="timetable-error">
+    <div class="timetable-validation">
 
-        <div class="error-icon">
+        <div class="validation-icon">
             ⚠️
         </div>
 
         <div>
 
             <h3>
-                Cannot Generate Timetable
+                Validation Information
             </h3>
 
-            <p>
-                {{ error }}
-            </p>
+            <ul>
 
-            <a
-                href="{{ url_for('assignments') }}"
-                class="card-button"
-            >
-                Manage Assignments
-            </a>
+                {% for message in validation_errors %}
+
+                <li>
+                    {{ message }}
+                </li>
+
+                {% endfor %}
+
+            </ul>
 
         </div>
 
-    </section>
+    </div>
 
-    {% else %}
+    {% endif %}
 
 
 
-    <!-- =========================================
-         UNSCHEDULED WARNING
-    ========================================= -->
+    <!-- CONFLICT REPORT -->
+
+    {% if conflicts %}
+
+    <div class="timetable-error">
+
+        <div class="error-icon">
+            ❌
+        </div>
+
+        <div>
+
+            <h3>
+                Timetable Conflicts Detected
+            </h3>
+
+            <p>
+                The following conflicts were detected:
+            </p>
+
+            <ul>
+
+                {% for conflict in conflicts %}
+
+                <li>
+                    {{ conflict }}
+                </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    {% elif timetable %}
+
+    <div class="success-message">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <div>
+
+            <h3>
+                Timetable Generated Successfully
+            </h3>
+
+            <p>
+                No teacher or class scheduling conflicts
+                were detected in the generated timetable.
+            </p>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+
+    <!-- UNSCHEDULED LESSONS -->
 
     {% if unscheduled %}
 
-    <section class="timetable-warning">
+    <div class="timetable-warning">
 
         <h3>
-            ⚠️ Some lessons could not be scheduled
+            ⚠️ Unscheduled Lessons
         </h3>
 
         <p>
-            There are not enough available time slots
-            for all required lessons.
+            Some lessons could not be placed because
+            there were no available periods.
         </p>
+
 
         <ul>
 
@@ -165,15 +217,18 @@
 
             <li>
 
-                {{ lesson["class_name"] }}
-                -
-                {{ lesson["section"] }}
-
-                :
-                {{ lesson["subject_name"] }}
+                <strong>
+                    {{ lesson.subject_name }}
+                </strong>
 
                 —
-                {{ lesson["teacher_name"] }}
+
+                {{ lesson.teacher_name }}
+
+                —
+
+                {{ lesson.class_name }}
+                {{ lesson.section }}
 
             </li>
 
@@ -181,23 +236,18 @@
 
         </ul>
 
-    </section>
+    </div>
 
     {% endif %}
 
 
 
-    <!-- =========================================
-         CLASS TIMETABLES
-    ========================================= -->
+    <!-- TIMETABLES -->
 
-    {% for class_id, class_schedule in timetable.items() %}
-
+    {% for class_id, class_timetable in timetable.items() %}
 
     <section class="timetable-card">
 
-
-        <!-- CLASS TITLE -->
 
         <div class="timetable-card-heading">
 
@@ -209,11 +259,11 @@
 
                 <h2>
 
-                    {{ class_information[class_id]["class_name"] }}
+                    {{ class_information[class_id].class_name }}
 
                     -
 
-                    {{ class_information[class_id]["section"] }}
+                    {{ class_information[class_id].section }}
 
                 </h2>
 
@@ -223,11 +273,10 @@
 
 
 
-        <!-- TIMETABLE -->
-
         <div class="timetable-table-container">
 
             <table class="timetable-table">
+
 
                 <thead>
 
@@ -270,23 +319,23 @@
 
                         {% for day in days %}
 
+                        {% set lesson =
+                            class_timetable[day][period]
+                        %}
+
+
                         <td>
-
-                            {% set lesson =
-                                class_schedule[day][period]
-                            %}
-
 
                             {% if lesson %}
 
                             <div class="lesson">
 
                                 <strong>
-                                    {{ lesson["subject_name"] }}
+                                    {{ lesson.subject_name }}
                                 </strong>
 
                                 <span>
-                                    {{ lesson["teacher_name"] }}
+                                    {{ lesson.teacher_name }}
                                 </span>
 
                             </div>
@@ -294,9 +343,7 @@
                             {% else %}
 
                             <div class="free-period">
-
-                                Free
-
+                                Free Period
                             </div>
 
                             {% endif %}
@@ -315,53 +362,52 @@
 
         </div>
 
-
     </section>
-
 
     {% endfor %}
 
 
 
-    <!-- =========================================
-         GENERATOR INFORMATION
-    ========================================= -->
+    <!-- RESULT INFORMATION -->
+
+    {% if timetable %}
 
     <section class="generator-result-info">
 
         <div class="generator-result-icon">
-            🤖
+            🗓️
         </div>
 
         <div>
 
             <h3>
-                Timetable Generated Successfully
+                Timetable Generation Complete
             </h3>
 
             <p>
-                The generator checks that a class and
-                teacher are not assigned to two lessons
-                during the same time slot.
+                The timetable contains
+                {{ days|length }}
+                working days with
+                {{ number_of_periods }}
+                periods per day.
+                Teacher and class conflicts were
+                checked during generation.
             </p>
 
         </div>
 
     </section>
 
-
     {% endif %}
 
 
 
-    <!-- =========================================
-         ACTIONS
-    ========================================= -->
+    <!-- ACTIONS -->
 
     <div class="timetable-actions">
 
         <a
-            href="{{ url_for('home') }}"
+            href="{{ url_for('index') }}"
             class="secondary-button"
         >
             ← Dashboard
@@ -369,10 +415,18 @@
 
 
         <a
-            href="{{ url_for('generate_timetable') }}"
-            class="save-button"
+            href="{{ url_for('assignments') }}"
+            class="secondary-button"
         >
-            🔄 Generate Again
+            Manage Assignments
+        </a>
+
+
+        <a
+            href="{{ url_for('generate_timetable') }}"
+            class="generate-button"
+        >
+            Generate Again
         </a>
 
     </div>
@@ -382,14 +436,11 @@
 
 
 
-<!-- =========================================
-     FOOTER
-========================================= -->
-
-<footer class="footer">
+<footer class="main-footer">
 
     <p>
-        © 2026 SmartSchool Timetable Management System
+        © 2026 SmartSchool —
+        AI-Assisted School Timetable Generator
     </p>
 
 </footer>
