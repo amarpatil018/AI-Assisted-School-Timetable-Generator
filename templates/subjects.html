@@ -92,8 +92,8 @@
         </h2>
 
         <p>
-            Add and manage subjects and their weekly
-            lesson requirements.
+            Add subjects and define their weekly lesson
+            requirements.
         </p>
 
     </section>
@@ -222,21 +222,13 @@
 
                     <tr>
 
-                        <th>
-                            #
-                        </th>
+                        <th>#</th>
 
-                        <th>
-                            Subject
-                        </th>
+                        <th>Subject</th>
 
-                        <th>
-                            Periods / Week
-                        </th>
+                        <th>Periods / Week</th>
 
-                        <th>
-                            Action
-                        </th>
+                        <th>Action</th>
 
                     </tr>
 
@@ -253,34 +245,28 @@
                             {{ loop.index }}
                         </td>
 
-
                         <td>
 
                             <strong>
-                                {{ subject['subject_name'] }}
+                                {{ subject["subject_name"] }}
                             </strong>
 
                         </td>
 
-
                         <td>
 
                             <span class="section-badge">
-                                {{ subject['periods_per_week'] }}
+                                {{ subject["periods_per_week"] }}
                             </span>
 
                         </td>
 
-
                         <td>
-
-                            <!-- IMPORTANT:
-                                 subject_id matches app.py -->
 
                             <a
                                 href="{{ url_for('delete_subject', subject_id=subject['id']) }}"
                                 class="delete-button"
-                                onclick="return confirm('Are you sure you want to delete this subject?');"
+                                onclick="return confirm('Delete this subject?');"
                             >
                                 Delete
                             </a>
@@ -299,7 +285,6 @@
 
         {% else %}
 
-
         <div class="empty-state">
 
             <div class="empty-state-icon">
@@ -316,7 +301,6 @@
 
         </div>
 
-
         {% endif %}
 
     </section>
@@ -325,52 +309,21 @@
     <section class="info-box">
 
         <div class="info-icon">
-            💡
+            📚
         </div>
 
         <div>
 
             <h3>
-                Weekly Periods
+                Weekly Lesson Requirement
             </h3>
 
             <p>
-                The number of periods per week helps the
-                timetable generator understand how often
-                each subject should appear in the timetable.
+                Periods per week defines how many times a
+                subject should appear in the timetable.
             </p>
 
         </div>
-
-    </section>
-
-
-    <section class="next-step-card">
-
-        <div>
-
-            <span class="small-label">
-                NEXT STEP
-            </span>
-
-            <h3>
-                Create Teacher Assignments
-            </h3>
-
-            <p>
-                Connect classes, subjects and teachers
-                before generating the timetable.
-            </p>
-
-        </div>
-
-
-        <a
-            href="{{ url_for('assignments') }}"
-            class="primary-button"
-        >
-            Manage Assignments →
-        </a>
 
     </section>
 

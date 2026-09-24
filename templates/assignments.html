@@ -92,16 +92,14 @@
         </h2>
 
         <p>
-            Assign teachers to subjects and classes and
-            define the required periods per week.
+            Connect classes, subjects and teachers before
+            generating the timetable.
         </p>
 
     </section>
 
 
-    <!-- =================================================
-         ADD ASSIGNMENT
-    ================================================== -->
+    <!-- ADD ASSIGNMENT -->
 
     <section class="content-card">
 
@@ -127,13 +125,12 @@
         <div class="warning-box">
 
             <strong>
-                Setup required
+                Setup Required
             </strong>
 
             <p>
-                Please make sure you have at least one
-                class, teacher and subject before creating
-                an assignment.
+                Add at least one class, teacher and subject
+                before creating an assignment.
             </p>
 
         </div>
@@ -268,7 +265,7 @@
                     type="submit"
                     class="primary-button"
                     {% if not classes or not teachers or not subjects %}
-                    disabled
+                        disabled
                     {% endif %}
                 >
                     + Add Assignment
@@ -281,9 +278,7 @@
     </section>
 
 
-    <!-- =================================================
-         ASSIGNMENT LIST
-    ================================================== -->
+    <!-- ASSIGNMENT LIST -->
 
     <section class="content-card">
 
@@ -327,29 +322,17 @@
 
                     <tr>
 
-                        <th>
-                            #
-                        </th>
+                        <th>#</th>
 
-                        <th>
-                            Class
-                        </th>
+                        <th>Class</th>
 
-                        <th>
-                            Subject
-                        </th>
+                        <th>Subject</th>
 
-                        <th>
-                            Teacher
-                        </th>
+                        <th>Teacher</th>
 
-                        <th>
-                            Periods / Week
-                        </th>
+                        <th>Periods / Week</th>
 
-                        <th>
-                            Action
-                        </th>
+                        <th>Action</th>
 
                     </tr>
 
@@ -366,52 +349,42 @@
                             {{ loop.index }}
                         </td>
 
-
                         <td>
 
                             <strong>
 
-                                {{ assignment['class_name'] }}
-
+                                {{ assignment["class_name"] }}
                                 -
-                                
-                                {{ assignment['section'] }}
+                                {{ assignment["section"] }}
 
                             </strong>
 
                         </td>
 
-
                         <td>
-                            {{ assignment['subject_name'] }}
+                            {{ assignment["subject_name"] }}
                         </td>
 
-
                         <td>
-                            {{ assignment['teacher_name'] }}
+                            {{ assignment["teacher_name"] }}
                         </td>
-
 
                         <td>
 
                             <span class="section-badge">
 
-                                {{ assignment['periods_per_week'] }}
+                                {{ assignment["periods_per_week"] }}
 
                             </span>
 
                         </td>
 
-
                         <td>
-
-                            <!-- IMPORTANT:
-                                 assignment_id matches app.py -->
 
                             <a
                                 href="{{ url_for('delete_assignment', assignment_id=assignment['id']) }}"
                                 class="delete-button"
-                                onclick="return confirm('Are you sure you want to delete this assignment?');"
+                                onclick="return confirm('Delete this assignment?');"
                             >
                                 Delete
                             </a>
@@ -430,7 +403,6 @@
 
         {% else %}
 
-
         <div class="empty-state">
 
             <div class="empty-state-icon">
@@ -448,67 +420,42 @@
 
         </div>
 
-
         {% endif %}
 
     </section>
 
 
-    <!-- =================================================
-         INFORMATION
-    ================================================== -->
+    <!-- GENERATE -->
 
-    <section class="info-box">
+    <section class="generator-card">
 
-        <div class="info-icon">
+        <div class="generator-icon">
             🤖
         </div>
 
-        <div>
-
-            <h3>
-                Automatic Timetable Generation
-            </h3>
-
-            <p>
-                Once assignments are created, the system
-                can automatically generate a timetable while
-                checking class and teacher scheduling
-                conflicts.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <section class="next-step-card">
-
-        <div>
+        <div class="generator-content">
 
             <span class="small-label">
                 NEXT STEP
             </span>
 
-            <h3>
-                Generate Timetable
-            </h3>
+            <h2>
+                Generate Your Timetable
+            </h2>
 
             <p>
-                Your classes, teachers, subjects and
-                assignments are ready for timetable
-                generation.
+                Once assignments are ready, the system can
+                automatically create the timetable.
             </p>
 
+            <a
+                href="{{ url_for('generate_timetable') }}"
+                class="generate-button"
+            >
+                Generate Timetable →
+            </a>
+
         </div>
-
-
-        <a
-            href="{{ url_for('generate_timetable') }}"
-            class="primary-button"
-        >
-            Generate Timetable →
-        </a>
 
     </section>
 
