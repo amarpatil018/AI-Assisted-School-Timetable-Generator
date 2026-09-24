@@ -25,10 +25,6 @@
 <body>
 
 
-<!-- =====================================================
-     HEADER
-====================================================== -->
-
 <header class="main-header">
 
     <div class="header-container">
@@ -82,14 +78,8 @@
 </header>
 
 
-<!-- =====================================================
-     MAIN
-====================================================== -->
-
 <main class="page-container">
 
-
-    <!-- PAGE HEADING -->
 
     <section class="page-heading">
 
@@ -109,9 +99,7 @@
     </section>
 
 
-    <!-- =================================================
-         ADD TEACHER
-    ================================================== -->
+    <!-- ADD TEACHER -->
 
     <section class="content-card">
 
@@ -137,7 +125,6 @@
             action="{{ url_for('teachers') }}"
             class="form-grid"
         >
-
 
             <div class="form-group">
 
@@ -183,15 +170,12 @@
 
             </div>
 
-
         </form>
 
     </section>
 
 
-    <!-- =================================================
-         TEACHER LIST
-    ================================================== -->
+    <!-- TEACHER LIST -->
 
     <section class="content-card">
 
@@ -235,21 +219,13 @@
 
                     <tr>
 
-                        <th>
-                            #
-                        </th>
+                        <th>#</th>
 
-                        <th>
-                            Teacher Name
-                        </th>
+                        <th>Teacher</th>
 
-                        <th>
-                            Subjects
-                        </th>
+                        <th>Subjects</th>
 
-                        <th>
-                            Action
-                        </th>
+                        <th>Action</th>
 
                     </tr>
 
@@ -266,21 +242,19 @@
                             {{ loop.index }}
                         </td>
 
-
                         <td>
 
                             <strong>
-                                {{ teacher['teacher_name'] }}
+                                {{ teacher["teacher_name"] }}
                             </strong>
 
                         </td>
 
-
                         <td>
 
-                            {% if teacher['subjects'] %}
+                            {% if teacher["subjects"] %}
 
-                                {{ teacher['subjects'] }}
+                                {{ teacher["subjects"] }}
 
                             {% else %}
 
@@ -292,16 +266,12 @@
 
                         </td>
 
-
                         <td>
-
-                            <!-- IMPORTANT:
-                                 teacher_id matches app.py -->
 
                             <a
                                 href="{{ url_for('delete_teacher', teacher_id=teacher['id']) }}"
                                 class="delete-button"
-                                onclick="return confirm('Are you sure you want to delete this teacher?');"
+                                onclick="return confirm('Delete this teacher?');"
                             >
                                 Delete
                             </a>
@@ -320,9 +290,6 @@
 
         {% else %}
 
-
-        <!-- EMPTY STATE -->
-
         <div class="empty-state">
 
             <div class="empty-state-icon">
@@ -339,15 +306,10 @@
 
         </div>
 
-
         {% endif %}
 
     </section>
 
-
-    <!-- =================================================
-         INFORMATION
-    ================================================== -->
 
     <section class="info-box">
 
@@ -358,61 +320,22 @@
         <div>
 
             <h3>
-                Teacher Information
+                Teacher Scheduling
             </h3>
 
             <p>
-                Teachers can later be assigned to subjects
-                and classes. The timetable generator will
-                automatically prevent a teacher from being
-                scheduled for two classes at the same time.
+                The timetable generator prevents a teacher
+                from being assigned to two different classes
+                during the same period.
             </p>
 
         </div>
-
-    </section>
-
-
-    <!-- =================================================
-         NEXT STEP
-    ================================================== -->
-
-    <section class="next-step-card">
-
-        <div>
-
-            <span class="small-label">
-                NEXT STEP
-            </span>
-
-            <h3>
-                Add Subjects
-            </h3>
-
-            <p>
-                Add the subjects that will be taught in
-                your school.
-            </p>
-
-        </div>
-
-
-        <a
-            href="{{ url_for('subjects') }}"
-            class="primary-button"
-        >
-            Manage Subjects →
-        </a>
 
     </section>
 
 
 </main>
 
-
-<!-- =====================================================
-     FOOTER
-====================================================== -->
 
 <footer class="main-footer">
 

@@ -10,7 +10,9 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>School Settings</title>
+    <title>
+        Teachers - AI-Assisted School Timetable Generator
+    </title>
 
     <link
         rel="stylesheet"
@@ -27,12 +29,14 @@
 
     <div class="header-container">
 
-        <div class="logo">
+        <div class="logo-area">
 
-            <h1>SmartSchool</h1>
+            <h1>
+                AI-Assisted School Timetable Generator
+            </h1>
 
             <p>
-                AI-Assisted Timetable Generator
+                Smart School Management System
             </p>
 
         </div>
@@ -48,7 +52,10 @@
                 Classes
             </a>
 
-            <a href="{{ url_for('teachers') }}">
+            <a
+                href="{{ url_for('teachers') }}"
+                class="active"
+            >
                 Teachers
             </a>
 
@@ -60,10 +67,7 @@
                 Assignments
             </a>
 
-            <a
-                href="{{ url_for('settings') }}"
-                class="active"
-            >
+            <a href="{{ url_for('settings') }}">
                 Settings
             </a>
 
@@ -74,273 +78,258 @@
 </header>
 
 
-
 <main class="page-container">
 
 
     <section class="page-heading">
 
-        <p class="small-heading">
-            CONFIGURATION
-        </p>
+        <span class="section-label">
+            SCHOOL MANAGEMENT
+        </span>
 
-        <h1>
-            School Settings
-        </h1>
+        <h2>
+            Teachers
+        </h2>
 
         <p>
-            Configure your school's timetable structure.
+            Add and manage teachers who will be assigned
+            to subjects and classes.
         </p>
 
     </section>
 
 
+    <!-- ADD TEACHER -->
 
-    <section class="form-card">
+    <section class="content-card">
+
+        <div class="card-heading">
+
+            <div>
+
+                <span class="small-label">
+                    ADD NEW
+                </span>
+
+                <h3>
+                    Add Teacher
+                </h3>
+
+            </div>
+
+        </div>
+
 
         <form
             method="POST"
-            action="{{ url_for('settings') }}"
+            action="{{ url_for('teachers') }}"
+            class="form-grid"
         >
 
+            <div class="form-group">
 
-            <div class="form-section">
+                <label for="teacher_name">
+                    Teacher Name
+                </label>
 
-                <h2>
-                    School Information
-                </h2>
-
-
-                <div class="form-group">
-
-                    <label for="school_name">
-                        School Name
-                    </label>
-
-                    <input
-                        type="text"
-                        id="school_name"
-                        name="school_name"
-                        value="{{ settings.school_name }}"
-                        required
-                    >
-
-                </div>
+                <input
+                    type="text"
+                    id="teacher_name"
+                    name="teacher_name"
+                    placeholder="Example: Rahul Sharma"
+                    required
+                >
 
             </div>
 
 
+            <div class="form-group">
 
-            <div class="form-section">
+                <label for="subjects">
+                    Subjects
+                </label>
 
-                <h2>
-                    School Timing
-                </h2>
-
-
-                <div class="form-grid">
-
-
-                    <div class="form-group">
-
-                        <label for="start_time">
-                            School Start Time
-                        </label>
-
-                        <input
-                            type="time"
-                            id="start_time"
-                            name="start_time"
-                            value="{{ settings.start_time }}"
-                            required
-                        >
-
-                    </div>
-
-
-
-                    <div class="form-group">
-
-                        <label for="end_time">
-                            School End Time
-                        </label>
-
-                        <input
-                            type="time"
-                            id="end_time"
-                            name="end_time"
-                            value="{{ settings.end_time }}"
-                            required
-                        >
-
-                    </div>
-
-
-                </div>
+                <input
+                    type="text"
+                    id="subjects"
+                    name="subjects"
+                    placeholder="Example: Mathematics, Physics"
+                >
 
             </div>
 
 
+            <div class="form-submit">
 
-            <div class="form-section">
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    + Add Teacher
+                </button>
 
-                <h2>
-                    Period Configuration
-                </h2>
+            </div>
 
+        </form>
 
-                <div class="form-grid">
-
-
-                    <div class="form-group">
-
-                        <label for="period_duration">
-                            Period Duration (minutes)
-                        </label>
-
-                        <input
-                            type="number"
-                            id="period_duration"
-                            name="period_duration"
-                            min="1"
-                            value="{{ settings.period_duration }}"
-                            required
-                        >
-
-                    </div>
+    </section>
 
 
+    <!-- TEACHER LIST -->
 
-                    <div class="form-group">
+    <section class="content-card">
 
-                        <label for="number_of_periods">
-                            Number of Periods Per Day
-                        </label>
+        <div class="card-heading">
 
-                        <input
-                            type="number"
-                            id="number_of_periods"
-                            name="number_of_periods"
-                            min="1"
-                            max="15"
-                            value="{{ settings.number_of_periods }}"
-                            required
-                        >
+            <div>
 
-                    </div>
+                <span class="small-label">
+                    CURRENT DATA
+                </span>
 
-
-                </div>
+                <h3>
+                    Teacher List
+                </h3>
 
             </div>
 
 
+            <div class="data-count">
 
-            <div class="form-section">
+                {{ teachers|length }}
 
-                <h2>
-                    Working Days
-                </h2>
+                {% if teachers|length == 1 %}
+                    Teacher
+                {% else %}
+                    Teachers
+                {% endif %}
+
+            </div>
+
+        </div>
 
 
-                <div class="days-grid">
+        {% if teachers %}
+
+        <div class="table-container">
+
+            <table class="data-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>Teacher</th>
+
+                        <th>Subjects</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
 
 
-                    {% for day in [
-                        "Monday",
-                        "Tuesday",
-                        "Wednesday",
-                        "Thursday",
-                        "Friday",
-                        "Saturday",
-                        "Sunday"
-                    ] %}
+                <tbody>
 
-                    <label class="checkbox-label">
+                    {% for teacher in teachers %}
 
-                        <input
-                            type="checkbox"
-                            name="working_days"
-                            value="{{ day }}"
-                            {% if day in settings.working_days %}
-                            checked
+                    <tr>
+
+                        <td>
+                            {{ loop.index }}
+                        </td>
+
+                        <td>
+
+                            <strong>
+                                {{ teacher["teacher_name"] }}
+                            </strong>
+
+                        </td>
+
+                        <td>
+
+                            {% if teacher["subjects"] %}
+
+                                {{ teacher["subjects"] }}
+
+                            {% else %}
+
+                                <span class="muted-text">
+                                    Not specified
+                                </span>
+
                             {% endif %}
-                        >
 
-                        <span>
-                            {{ day }}
-                        </span>
+                        </td>
 
-                    </label>
+                        <td>
+
+                            <a
+                                href="{{ url_for('delete_teacher', teacher_id=teacher['id']) }}"
+                                class="delete-button"
+                                onclick="return confirm('Delete this teacher?');"
+                            >
+                                Delete
+                            </a>
+
+                        </td>
+
+                    </tr>
 
                     {% endfor %}
 
+                </tbody>
 
-                </div>
+            </table>
 
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <div class="empty-state-icon">
+                👨‍🏫
             </div>
 
+            <h3>
+                No Teachers Added
+            </h3>
+
+            <p>
+                Add your first teacher using the form above.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </section>
 
 
-            <div class="form-section">
+    <section class="info-box">
 
-                <h2>
-                    Break Configuration
-                </h2>
+        <div class="info-icon">
+            💡
+        </div>
 
+        <div>
 
-                <div class="form-grid">
+            <h3>
+                Teacher Scheduling
+            </h3>
 
+            <p>
+                The timetable generator prevents a teacher
+                from being assigned to two different classes
+                during the same period.
+            </p>
 
-                    <div class="form-group">
-
-                        <label for="break_start">
-                            Break Start Time
-                        </label>
-
-                        <input
-                            type="time"
-                            id="break_start"
-                            name="break_start"
-                            value="{{ settings.break_start }}"
-                        >
-
-                    </div>
-
-
-
-                    <div class="form-group">
-
-                        <label for="break_duration">
-                            Break Duration (minutes)
-                        </label>
-
-                        <input
-                            type="number"
-                            id="break_duration"
-                            name="break_duration"
-                            min="0"
-                            value="{{ settings.break_duration }}"
-                        >
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-
-
-            <button
-                type="submit"
-                class="primary-button"
-            >
-                Save Settings
-            </button>
-
-
-        </form>
+        </div>
 
     </section>
 
@@ -348,12 +337,14 @@
 </main>
 
 
-
 <footer class="main-footer">
 
     <p>
-        © 2026 SmartSchool —
-        AI-Assisted School Timetable Generator
+        © 2026 AI-Assisted School Timetable Generator
+    </p>
+
+    <p>
+        Smart • Simple • Automated
     </p>
 
 </footer>

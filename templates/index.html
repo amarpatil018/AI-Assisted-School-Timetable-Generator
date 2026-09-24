@@ -10,7 +10,9 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>SmartSchool Dashboard</title>
+    <title>
+        AI-Assisted School Timetable Generator
+    </title>
 
     <link
         rel="stylesheet"
@@ -27,12 +29,14 @@
 
     <div class="header-container">
 
-        <div class="logo">
+        <div class="logo-area">
 
-            <h1>SmartSchool</h1>
+            <h1>
+                AI-Assisted School Timetable Generator
+            </h1>
 
             <p>
-                AI-Assisted Timetable Generator
+                Smart School Management System
             </p>
 
         </div>
@@ -74,343 +78,208 @@
 </header>
 
 
+<main class="page-container">
 
-<main class="dashboard-container">
 
+    <section class="hero-section">
 
-    <!-- WELCOME -->
+        <span class="section-label">
+            AI-POWERED SCHOOL MANAGEMENT
+        </span>
 
-    <section class="welcome-section">
+        <h2>
+            Welcome to your Smart Timetable Generator
+        </h2>
 
-        <div class="welcome-content">
+        <p>
+            Manage classes, teachers, subjects and
+            assignments and generate a timetable
+            automatically.
+        </p>
 
-            <p class="small-heading">
-                SCHOOL TIMETABLE MANAGEMENT
-            </p>
+        <div class="hero-actions">
 
-            <h2>
-                Welcome to SmartSchool
-            </h2>
+            <a
+                href="{{ url_for('generate_timetable') }}"
+                class="primary-button"
+            >
+                Generate Timetable
+            </a>
 
-            <p>
-                Manage classes, teachers, subjects and
-                assignments, then automatically generate
-                a school timetable.
-            </p>
+            <a
+                href="{{ url_for('assignments') }}"
+                class="secondary-button"
+            >
+                Manage Assignments
+            </a>
 
         </div>
 
     </section>
 
 
+    <!-- STATISTICS -->
 
-    <!-- DASHBOARD CARDS -->
-
-    <section class="dashboard-cards">
+    <section class="dashboard-grid">
 
 
-        <a
-            href="{{ url_for('classes') }}"
-            class="dashboard-card"
-        >
+        <div class="dashboard-card">
 
-            <div class="card-icon">
+            <div class="dashboard-icon">
                 🏫
             </div>
 
-            <div class="card-content">
+            <h3>
+                {{ class_count }}
+            </h3>
 
-                <h3>
-                    Classes
-                </h3>
+            <p>
+                Classes
+            </p>
 
-                <p>
-                    Add and manage school classes
-                    and sections.
-                </p>
+            <a href="{{ url_for('classes') }}">
+                Manage Classes →
+            </a>
 
-                <span class="card-link">
-                    Manage Classes →
-                </span>
-
-            </div>
-
-        </a>
+        </div>
 
 
+        <div class="dashboard-card">
 
-        <a
-            href="{{ url_for('teachers') }}"
-            class="dashboard-card"
-        >
-
-            <div class="card-icon">
+            <div class="dashboard-icon">
                 👨‍🏫
             </div>
 
-            <div class="card-content">
+            <h3>
+                {{ teacher_count }}
+            </h3>
 
-                <h3>
-                    Teachers
-                </h3>
+            <p>
+                Teachers
+            </p>
 
-                <p>
-                    Add teachers and manage
-                    teaching information.
-                </p>
+            <a href="{{ url_for('teachers') }}">
+                Manage Teachers →
+            </a>
 
-                <span class="card-link">
-                    Manage Teachers →
-                </span>
-
-            </div>
-
-        </a>
+        </div>
 
 
+        <div class="dashboard-card">
 
-        <a
-            href="{{ url_for('subjects') }}"
-            class="dashboard-card"
-        >
-
-            <div class="card-icon">
+            <div class="dashboard-icon">
                 📚
             </div>
 
-            <div class="card-content">
+            <h3>
+                {{ subject_count }}
+            </h3>
 
-                <h3>
-                    Subjects
-                </h3>
+            <p>
+                Subjects
+            </p>
 
-                <p>
-                    Create subjects and define
-                    weekly periods.
-                </p>
+            <a href="{{ url_for('subjects') }}">
+                Manage Subjects →
+            </a>
 
-                <span class="card-link">
-                    Manage Subjects →
-                </span>
+        </div>
 
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                📝
             </div>
 
-        </a>
+            <h3>
+                {{ assignment_count }}
+            </h3>
 
+            <p>
+                Assignments
+            </p>
 
+            <a href="{{ url_for('assignments') }}">
+                Manage Assignments →
+            </a>
 
-        <a
-            href="{{ url_for('assignments') }}"
-            class="dashboard-card"
-        >
-
-            <div class="card-icon">
-                🔗
-            </div>
-
-            <div class="card-content">
-
-                <h3>
-                    Assignments
-                </h3>
-
-                <p>
-                    Assign teachers and subjects
-                    to classes.
-                </p>
-
-                <span class="card-link">
-                    Manage Assignments →
-                </span>
-
-            </div>
-
-        </a>
-
-
-
-        <a
-            href="{{ url_for('settings') }}"
-            class="dashboard-card"
-        >
-
-            <div class="card-icon">
-                ⚙️
-            </div>
-
-            <div class="card-content">
-
-                <h3>
-                    School Settings
-                </h3>
-
-                <p>
-                    Configure school timing and
-                    working days.
-                </p>
-
-                <span class="card-link">
-                    Open Settings →
-                </span>
-
-            </div>
-
-        </a>
+        </div>
 
 
     </section>
-
 
 
     <!-- CURRENT DATA -->
 
-    <section class="dashboard-section">
+    <section class="content-card">
 
-        <div class="section-heading">
+        <div class="card-heading">
 
             <div>
 
-                <p class="small-heading">
-                    OVERVIEW
-                </p>
+                <span class="small-label">
+                    CURRENT DATA
+                </span>
 
-                <h2>
-                    Current Data
-                </h2>
+                <h3>
+                    School Overview
+                </h3>
 
             </div>
 
         </div>
 
 
-        <div class="summary-grid">
+        <div class="overview-grid">
 
-
-            <div class="summary-card">
-
-                <span class="summary-icon">
-                    🏫
-                </span>
-
-                <div>
-
-                    <h3>
-                        {{ class_count }}
-                    </h3>
-
-                    <p>
-                        Classes
-                    </p>
-
-                </div>
-
+            <div>
+                <strong>{{ class_count }}</strong>
+                <span>Classes</span>
             </div>
 
-
-
-            <div class="summary-card">
-
-                <span class="summary-icon">
-                    👨‍🏫
-                </span>
-
-                <div>
-
-                    <h3>
-                        {{ teacher_count }}
-                    </h3>
-
-                    <p>
-                        Teachers
-                    </p>
-
-                </div>
-
+            <div>
+                <strong>{{ teacher_count }}</strong>
+                <span>Teachers</span>
             </div>
 
-
-
-            <div class="summary-card">
-
-                <span class="summary-icon">
-                    📚
-                </span>
-
-                <div>
-
-                    <h3>
-                        {{ subject_count }}
-                    </h3>
-
-                    <p>
-                        Subjects
-                    </p>
-
-                </div>
-
+            <div>
+                <strong>{{ subject_count }}</strong>
+                <span>Subjects</span>
             </div>
 
-
-
-            <div class="summary-card">
-
-                <span class="summary-icon">
-                    🔗
-                </span>
-
-                <div>
-
-                    <h3>
-                        {{ assignment_count }}
-                    </h3>
-
-                    <p>
-                        Teacher Assignments
-                    </p>
-
-                </div>
-
+            <div>
+                <strong>{{ assignment_count }}</strong>
+                <span>Assignments</span>
             </div>
-
 
         </div>
 
     </section>
 
 
-
     <!-- TIMETABLE GENERATOR -->
 
-    <section class="generator-section">
+    <section class="generator-card">
+
+        <div class="generator-icon">
+            🤖
+        </div>
 
         <div class="generator-content">
 
-            <div class="generator-icon">
-                🗓️
-            </div>
+            <span class="small-label">
+                AUTOMATION
+            </span>
 
-            <div class="generator-text">
+            <h2>
+                Automatic Timetable Generator
+            </h2>
 
-                <p class="small-heading">
-                    AUTOMATIC TIMETABLE
-                </p>
-
-                <h2>
-                    Generate School Timetable
-                </h2>
-
-                <p>
-                    Automatically place subjects into
-                    available periods while checking
-                    class and teacher conflicts.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="generator-action">
+            <p>
+                The system automatically schedules lessons
+                while checking class and teacher conflicts.
+            </p>
 
             <a
                 href="{{ url_for('generate_timetable') }}"
@@ -424,107 +293,86 @@
     </section>
 
 
+    <!-- SETTINGS SUMMARY -->
 
-    <!-- QUICK ACCESS -->
+    <section class="content-card">
 
-    <section class="quick-section">
-
-        <div class="section-heading">
+        <div class="card-heading">
 
             <div>
 
-                <p class="small-heading">
-                    QUICK ACCESS
-                </p>
+                <span class="small-label">
+                    SCHOOL CONFIGURATION
+                </span>
 
-                <h2>
-                    Teacher Assignments
-                </h2>
+                <h3>
+                    Current Settings
+                </h3>
 
             </div>
 
-
             <a
-                href="{{ url_for('assignments') }}"
+                href="{{ url_for('settings') }}"
                 class="secondary-button"
             >
-                View Assignments
+                Edit Settings
             </a>
 
         </div>
 
 
-        <div class="quick-info">
-
-            <div class="quick-info-icon">
-                🔗
-            </div>
+        <div class="settings-summary">
 
             <div>
 
-                <h3>
-                    Connect Teachers, Subjects and Classes
-                </h3>
+                <span>
+                    School
+                </span>
 
-                <p>
-                    Before generating the timetable,
-                    make sure the required classes,
-                    subjects, teachers and weekly
-                    periods have been assigned.
-                </p>
+                <strong>
+                    {{ settings["school_name"] }}
+                </strong>
 
             </div>
 
-        </div>
-
-    </section>
-
-
-
-    <!-- PROJECT PROGRESS -->
-
-    <section class="progress-section">
-
-        <div class="progress-header">
 
             <div>
 
-                <p class="small-heading">
-                    PROJECT PROGRESS
-                </p>
+                <span>
+                    Working Days
+                </span>
 
-                <h2>
-                    Timetable Generator Development
-                </h2>
+                <strong>
+                    {{ settings["working_days"]|length }}
+                </strong>
 
             </div>
 
-            <span class="progress-number">
-                Step 8 of 8
-            </span>
 
-        </div>
+            <div>
 
+                <span>
+                    Periods / Day
+                </span>
 
-        <div class="progress-bar">
+                <strong>
+                    {{ settings["number_of_periods"] }}
+                </strong>
 
-            <div
-                class="progress-fill"
-                style="width: 100%;"
-            ></div>
-
-        </div>
+            </div>
 
 
-        <div class="progress-details">
+            <div>
 
-            <span>
-                Conflict Detection & Final Timetable
-            </span>
+                <span>
+                    Period Duration
+                </span>
 
-            <span>
-                100% Complete
-            </span>
+                <strong>
+                    {{ settings["period_duration"] }} min
+                </strong>
+
+            </div>
 
         </div>
 
@@ -534,12 +382,14 @@
 </main>
 
 
-
 <footer class="main-footer">
 
     <p>
-        © 2026 SmartSchool —
-        AI-Assisted School Timetable Generator
+        © 2026 AI-Assisted School Timetable Generator
+    </p>
+
+    <p>
+        Smart • Simple • Automated
     </p>
 
 </footer>
